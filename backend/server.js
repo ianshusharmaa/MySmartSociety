@@ -23,6 +23,7 @@ const allowedOrigins = [
   'http://localhost:3001',
   'https://taupe-rugelach-625903.netlify.app',
   'https://my-smart-society-admin.netlify.app'
+  'https://my-smart-society-user.netlify.app'
 ].filter(Boolean);
 
 app.use(cors({
