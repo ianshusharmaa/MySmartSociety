@@ -1,0 +1,41 @@
+# Dependencies
+node_modules/
+frontend/node_modules/
+frontend-admin/node_modules/
+frontend-user/node_modules/
+frontend-admin/frontend/node_modules/
+frontend-user/frontend/node_modules/
+
+# Environment variables
+.env
+.env.local
+
+# Build files
+frontend/build/
+frontend-admin/build/
+frontend-user/build/
+dist/
+
+# Logs
+*.log
+npm-debug.log*
+logs/
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*.sublime-project
+*.sublime-workspace
+
+# Upload files
+uploads/
+
+# Cache
+.cache/
+dist/
