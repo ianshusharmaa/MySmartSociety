@@ -27,7 +27,7 @@ const Login = () => {
       const { data } = await loginAPI(formData);
       if (data.role === 'admin') {
         showToast('Admins please use the Admin Panel (opens in new tab).', 'info');
-        window.open('http://localhost:3001/login', '_blank', 'noopener');
+        window.open('https://taupe-rugelach-625903.netlify.app/login', '_blank', 'noopener');
         return;
       }
       login(data);
@@ -46,10 +46,9 @@ const Login = () => {
         <div className="auth-header">
           <h1>🏢 Smart Society</h1>
           <h2>Welcome Back</h2>
-          <p>Login to your account</p>
         </div>
 
-        <form onSubmit={handleSubmit} className="auth-form">
+        <form className="auth-form" onSubmit={handleSubmit}>
           <div className="form-group">
             <label className="form-label">Email</label>
             <input
@@ -81,11 +80,20 @@ const Login = () => {
           </button>
         </form>
 
-        <div className="demo-credentials">
-          <h4>Demo Credentials:</h4>
-          <p><strong>Admin:</strong> admin@society.com / admin123</p>
-          <p><strong>Resident:</strong> resident@society.com / resident123</p>
+        <p className="auth-note" style={{ marginTop: '16px', fontSize: '0.9rem', color: '#444' }}>
+          User ID can only be created by admin. Open admin login here:
+          {' '}
+          <a href="https://my-smart-society-admin.netlify.app" target="_blank" rel="noreferrer">
+            my-smart-society-admin.netlify.app (tap here)
+          </a>
+        </p>
+
+        <div style={{ marginTop: '24px', padding: '12px', backgroundColor: '#f5f5f5', borderRadius: '6px', fontSize: '0.85rem', color: '#666' }}>
+          <p style={{ margin: '0 0 8px 0', fontWeight: 'bold' }}>Demo Resident (by Anshukumar Sharma)</p>
+          <p style={{ margin: '4px 0' }}>Email: user@demo.com</p>
+          <p style={{ margin: '4px 0' }}>Password: user123</p>
         </div>
+
       </div>
     </div>
   );

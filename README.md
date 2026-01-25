@@ -70,8 +70,7 @@ For Admins:
 
 ## Default Login
 
-Admin: admin@society.com / admin123
-Resident: resident@society.com / resident123
+No default admin now. Create your first admin from the Admin site (Register form). Residents can be created by admins after login.
 
 ## Project Structure
 
@@ -96,11 +95,7 @@ npm run dev:all
 
 ## Default Admin Credentials
 
-After first run, you can create an admin account or use:
-- **Email**: admin@smartsociety.com
-- **Password**: admin123
-
-**Important**: Change the default admin password after first login!
+There are no hardcoded admin credentials. Please register a new admin on the Admin site and set your own password.
 
 ## API Endpoints
 

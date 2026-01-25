@@ -14,10 +14,6 @@ const Welcome = () => {
             <Link className="btn btn-primary" to="/login">Resident Login</Link>
             <a className="btn btn-ghost" href="http://localhost:3001/login" target="_blank" rel="noreferrer">Open Admin Panel</a>
           </div>
-          <div className="welcome-demo">
-            <span>Resident demo: resident@society.com / resident123</span>
-            <span>Admin demo: admin@society.com / admin123</span>
-          </div>
         </div>
         <div className="welcome-illustration" aria-hidden="true">
           <img 

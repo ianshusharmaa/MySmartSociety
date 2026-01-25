@@ -82,6 +82,12 @@ const Login = () => {
         <div className="auth-footer">
           <p>Need an admin account? <Link to="/register">Create one here</Link></p>
         </div>
+
+        <div style={{ marginTop: '24px', padding: '12px', backgroundColor: '#f5f5f5', borderRadius: '6px', fontSize: '0.85rem', color: '#666' }}>
+          <p style={{ margin: '0 0 8px 0', fontWeight: 'bold' }}>Demo Admin (by Anshukumar Sharma)</p>
+          <p style={{ margin: '4px 0' }}>Email: admin@demo.com</p>
+          <p style={{ margin: '4px 0' }}>Password: admin123</p>
+        </div>
       </div>
     </div>
   );

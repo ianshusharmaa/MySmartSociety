@@ -46,10 +46,9 @@ const Login = () => {
         <div className="auth-header">
           <h1>🏢 Smart Society</h1>
           <h2>Welcome Back</h2>
-          <p>Login to your account</p>
         </div>
 
-        <form onSubmit={handleSubmit} className="auth-form">
+        <form className="auth-form" onSubmit={handleSubmit}>
           <div className="form-group">
             <label className="form-label">Email</label>
             <input
@@ -81,11 +80,13 @@ const Login = () => {
           </button>
         </form>
 
-        <div className="demo-credentials">
-          <h4>Demo Credentials:</h4>
-          <p><strong>Admin:</strong> anshusharma4165@gmail.com / 220605</p>
-          <p><strong>Resident:</strong> ianshusharmaa2005@gmail.com / 220605</p>
-        </div>
+        <p className="auth-note" style={{ marginTop: '16px', fontSize: '0.9rem', color: '#444' }}>
+          User ID can only be created by admin. Open admin login here:
+          {' '}
+          <a href="https://my-smart-society-admin.netlify.app" target="_blank" rel="noreferrer">
+            my-smart-society-admin.netlify.app (tap here)
+          </a>
+        </p>
       </div>
     </div>
   );
