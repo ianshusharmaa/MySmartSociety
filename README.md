@@ -181,8 +181,8 @@ This project is licensed under the MIT License.
 
 ## Support
 
-For support, email: support@smartsociety.com
+For support, email: anshukumar.sharma.btechcse@ghrua.edu.in
 
 ---
 
-**Developed by Anshu Sharma**
+**Developed by Anshukumar Sharma**
