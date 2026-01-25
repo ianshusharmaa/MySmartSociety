@@ -21,7 +21,8 @@ const allowedOrigins = [
   process.env.FRONTEND_URL,
   'http://localhost:3000',
   'http://localhost:3001',
-  'https://taupe-rugelach-625903.netlify.app'
+  'https://taupe-rugelach-625903.netlify.app',
+  'https://my-smart-society-admin.netlify.app'
 ].filter(Boolean);
 
 app.use(cors({
