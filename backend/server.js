@@ -20,7 +20,8 @@ app.use(express.urlencoded({ extended: true }));
 const allowedOrigins = [
   process.env.FRONTEND_URL,
   'http://localhost:3000',
-  'http://localhost:3001'
+  'http://localhost:3001',
+  'https://taupe-rugelach-625903.netlify.app'
 ].filter(Boolean);
 
 app.use(cors({
