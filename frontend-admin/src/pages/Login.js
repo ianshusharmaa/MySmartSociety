@@ -56,6 +56,7 @@ const Login = () => {
               onChange={handleChange}
               required
               placeholder="Enter your email"
+              autoComplete="email"
             />
           </div>
 
@@ -69,6 +70,7 @@ const Login = () => {
               onChange={handleChange}
               required
               placeholder="Enter your password"
+              autoComplete="current-password"
             />
           </div>
 
@@ -79,11 +81,6 @@ const Login = () => {
 
         <div className="auth-footer">
           <p>Need an admin account? <Link to="/register">Create one here</Link></p>
-        </div>
-
-        <div className="demo-credentials">
-          <h4>Demo Credentials (Admin only):</h4>
-          <p><strong>Admin:</strong> admin@society.com / admin123</p>
         </div>
       </div>
     </div>
