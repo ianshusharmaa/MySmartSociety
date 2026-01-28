@@ -34,6 +34,14 @@ const complaintSchema = new mongoose.Schema({
     type: mongoose.Schema.Types.ObjectId,
     ref: 'User'
   },
+  assignedName: {
+    type: String,
+    required: [true, 'Assigned name is required']
+  },
+  assignedNumber: {
+    type: String,
+    required: [true, 'Assigned number is required']
+  },
   remarks: {
     type: String
   },

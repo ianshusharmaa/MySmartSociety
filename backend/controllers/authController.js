@@ -29,7 +29,7 @@ exports.register = async (req, res) => {
       phone,
       flatNumber,
       building,
-      role: role || 'resident'
+      role: role === 'admin' || role === 'resident' ? role : 'resident'
     });
 
     if (user) {

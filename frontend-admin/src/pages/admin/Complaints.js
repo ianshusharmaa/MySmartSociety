@@ -6,14 +6,16 @@ import '../resident/Complaints.css';
 
 const AdminComplaints = () => {
   const [complaints, setComplaints] = useState([]);
-  const [staff, setStaff] = useState([]);
   const [loading, setLoading] = useState(true);
   const [selectedComplaint, setSelectedComplaint] = useState(null);
   const [updateData, setUpdateData] = useState({
     status: '',
     priority: '',
     remarks: '',
-    assignedTo: ''
+    assignedTo: '',
+    category: '',
+    assignedName: '',
+    assignedNumber: ''
   });
 
   useEffect(() => {
@@ -27,7 +29,6 @@ const AdminComplaints = () => {
         getAllUsers()
       ]);
       setComplaints(complaintsRes.data);
-      setStaff(usersRes.data.filter(u => u.role === 'staff'));
     } catch (error) {
       toast.error('Failed to fetch data');
     } finally {
@@ -53,7 +54,7 @@ const AdminComplaints = () => {
       status: complaint.status,
       priority: complaint.priority,
       remarks: complaint.remarks || '',
-      assignedTo: complaint.assignedTo?._id || ''
+      category: complaint.category || ''
     });
   };
 
@@ -153,21 +154,42 @@ const AdminComplaints = () => {
                   </select>
                 </div>
 
-                {staff.length > 0 && (
-                  <div className="form-group">
-                    <label className="form-label">Assign To</label>
-                    <select
-                      className="form-select"
-                      value={updateData.assignedTo}
-                      onChange={(e) => setUpdateData({ ...updateData, assignedTo: e.target.value })}
-                    >
-                      <option value="">Not Assigned</option>
-                      {staff.map(s => (
-                        <option key={s._id} value={s._id}>{s.name}</option>
-                      ))}
-                    </select>
-                  </div>
-                )}
+                <div className="form-group">
+                  <label className="form-label">Category</label>
+                  <select
+                    className="form-select"
+                    value={updateData.category}
+                    onChange={(e) => setUpdateData({...updateData, category: e.target.value})}
+                  >
+                    <option value="electrician">Electrician</option>
+                    <option value="plumber">Plumber</option>
+                    <option value="cleaning">Cleaning</option>
+                    <option value="maintenance">Maintenance</option>
+                    <option value="other">Other</option>
+                  </select>
+                </div>
+
+
+
+                <div className="form-group">
+                  <label className="form-label">Assigned Name</label>
+                  <input
+                    type="text"
+                    placeholder="Assigned Name"
+                    value={updateData.assignedName}
+                    onChange={(e) => setUpdateData({...updateData, assignedName: e.target.value})}
+                  />
+                </div>
+
+                <div className="form-group">
+                  <label className="form-label">Assigned Number</label>
+                  <input
+                    type="text"
+                    placeholder="Assigned Number"
+                    value={updateData.assignedNumber}
+                    onChange={(e) => setUpdateData({...updateData, assignedNumber: e.target.value})}
+                  />
+                </div>
 
                 <div className="form-group">
                   <label className="form-label">Remarks</label>

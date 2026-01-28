@@ -176,7 +176,7 @@ const AdminUsers = () => {
                 <label>Role</label>
                 <select name="role" value={formData.role} onChange={handleChange}>
                   <option value="resident">Resident</option>
-                  <option value="staff">Maintenance Staff</option>
+                  <option value="admin">Admin</option>
                 </select>
               </div>
             </div>

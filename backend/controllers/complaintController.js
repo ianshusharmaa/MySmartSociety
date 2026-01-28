@@ -12,11 +12,6 @@ exports.getComplaints = async (req, res) => {
       query.resident = req.user._id;
     }
 
-    // If staff, only show assigned complaints
-    if (req.user.role === 'staff') {
-      query.assignedTo = req.user._id;
-    }
-
     const complaints = await Complaint.find(query)
       .populate('resident', 'name email flatNumber building phone')
       .populate('assignedTo', 'name email')
