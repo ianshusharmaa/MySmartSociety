@@ -9,33 +9,44 @@ const Welcome = () => {
         <div className="welcome-copy">
           <p className="eyebrow">Smart Society</p>
           <h1>Manage your home, payments, and permissions in one place.</h1>
-          <p className="lead">Residents use the blue panel. Admins sign in to the violet panel. No more confusion.</p>
+          <p className="lead">Welcome to your smart society management system. Handle complaints, permissions, maintenance requests, and stay updated with all society announcements - all in one platform.</p>
           <div className="welcome-actions">
             <Link className="btn btn-primary" to="/login">Resident Login</Link>
-            <a className="btn btn-ghost" href="http://localhost:3001/login" target="_blank" rel="noreferrer">Open Admin Panel</a>
+            <a className="btn btn-ghost" href="http://localhost:3001/login" target="_blank" rel="noreferrer">Admin Panel</a>
           </div>
-        </div>
-        <div className="welcome-illustration" aria-hidden="true">
-          <img 
-            src="https://www.livelaw.in/cms/wp-content/uploads/2018/06/Co-Operative-society.jpg"
-            alt="Society Community"
-            className="illustration-image"
-          />
         </div>
       </div>
 
       <div className="welcome-grid">
         <div className="welcome-card">
-          <h3>🏠 For Residents</h3>
-          <p>Admin creates your account and shares credentials. Login with email and password provided.</p>
+          <div className="card-icon">📋</div>
+          <h3>Manage Complaints</h3>
+          <p>Easily report maintenance issues, electrical problems, water supply issues, and more. Track status in real-time.</p>
         </div>
         <div className="welcome-card">
-          <h3>🔐 For Admins</h3>
-          <p>Create resident accounts in the Admin Panel. Set credentials and share with residents.</p>
+          <div className="card-icon">📄</div>
+          <h3>Request Permissions</h3>
+          <p>Submit permission requests for guests, guests stays, events, and renovations. Get instant approvals from admins.</p>
         </div>
         <div className="welcome-card">
-          <h3>✅ Secure & Clear</h3>
-          <p>Separate panels, role-based access, and instant login after credentials are set.</p>
+          <div className="card-icon">🔧</div>
+          <h3>Maintenance Updates</h3>
+          <p>Stay informed about building maintenance schedules, emergency repairs, and facility updates.</p>
+        </div>
+        <div className="welcome-card">
+          <div className="card-icon">📢</div>
+          <h3>Announcements</h3>
+          <p>Receive important notices, society events, meetings, and updates from the building administration.</p>
+        </div>
+        <div className="welcome-card">
+          <div className="card-icon">📱</div>
+          <h3>Easy Access</h3>
+          <p>Access all society information anytime, anywhere. View your profile, history, and pending requests.</p>
+        </div>
+        <div className="welcome-card">
+          <div className="card-icon">✅</div>
+          <h3>Secure & Reliable</h3>
+          <p>Your data is secure with role-based access control and encrypted communications.</p>
         </div>
       </div>
     </div>
