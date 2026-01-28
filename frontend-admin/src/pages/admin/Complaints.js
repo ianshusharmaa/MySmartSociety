@@ -24,10 +24,7 @@ const AdminComplaints = () => {
 
   const fetchData = async () => {
     try {
-    const [complaintsRes] = await Promise.all([
-        getComplaints(),
-        getAllUsers()
-      ]);
+      const complaintsRes = await getComplaints();
       setComplaints(complaintsRes.data);
     } catch (error) {
       toast.error('Failed to fetch data');

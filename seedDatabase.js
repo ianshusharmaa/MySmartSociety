@@ -68,16 +68,6 @@ const seedDatabase = async () => {
       role: 'resident'
     });
 
-    // Create Staff User
-    console.log('🛠️  Creating staff user...');
-    const staff = await User.create({
-      name: 'Anurag Khare',
-      email: 'staff@society.com',
-      password: 'staff123',
-      phone: '9876543213',
-      role: 'staff'
-    });
-
     // Create Sample Complaints
     console.log('📝 Creating sample complaints...');
     await Complaint.create([
@@ -96,7 +86,8 @@ const seedDatabase = async () => {
         priority: 'medium',
         status: 'in-progress',
         resident: resident1._id,
-        assignedTo: staff._id,
+        assignedName: 'Technician Team',
+        assignedNumber: '9876543213',
         remarks: 'Technician has been called'
       },
       {
