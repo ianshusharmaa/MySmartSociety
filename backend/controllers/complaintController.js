@@ -14,7 +14,6 @@ exports.getComplaints = async (req, res) => {
 
     const complaints = await Complaint.find(query)
       .populate('resident', 'name email flatNumber building phone')
-      .populate('assignedTo', 'name email')
       .sort('-createdAt');
 
     res.json(complaints);
@@ -29,8 +28,7 @@ exports.getComplaints = async (req, res) => {
 exports.getComplaint = async (req, res) => {
   try {
     const complaint = await Complaint.findById(req.params.id)
-      .populate('resident', 'name email flatNumber building phone')
-      .populate('assignedTo', 'name email');
+      .populate('resident', 'name email flatNumber building phone');
 
     if (!complaint) {
       return res.status(404).json({ message: 'Complaint not found' });
@@ -82,18 +80,19 @@ exports.updateComplaint = async (req, res) => {
       return res.status(404).json({ message: 'Complaint not found' });
     }
 
-    const { status, priority, remarks, assignedTo } = req.body;
+    const { status, priority, remarks, category, assignedName, assignedNumber } = req.body;
 
     if (status) complaint.status = status;
     if (priority) complaint.priority = priority;
     if (remarks) complaint.remarks = remarks;
-    if (assignedTo) complaint.assignedTo = assignedTo;
+    if (category) complaint.category = category;
+    if (assignedName) complaint.assignedName = assignedName;
+    if (assignedNumber) complaint.assignedNumber = assignedNumber;
 
     await complaint.save();
 
     const updatedComplaint = await Complaint.findById(complaint._id)
-      .populate('resident', 'name email flatNumber building phone')
-      .populate('assignedTo', 'name email');
+      .populate('resident', 'name email flatNumber building phone');
 
     res.json(updatedComplaint);
   } catch (error) {

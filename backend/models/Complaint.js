@@ -35,12 +35,10 @@ const complaintSchema = new mongoose.Schema({
     ref: 'User'
   },
   assignedName: {
-    type: String,
-    required: [true, 'Assigned name is required']
+    type: String
   },
   assignedNumber: {
-    type: String,
-    required: [true, 'Assigned number is required']
+    type: String
   },
   remarks: {
     type: String

@@ -22,7 +22,7 @@ const userSchema = new mongoose.Schema({
   },
   role: {
     type: String,
-    enum: ['resident', 'admin', 'staff'],
+    enum: ['resident', 'admin'],
     default: 'resident'
   },
   flatNumber: {

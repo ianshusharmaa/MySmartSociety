@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { toast } from 'react-toastify';
-import { FaPlus, FaTrash, FaToggleOn, FaToggleOff } from 'react-icons/fa';
+import { FaPlus, FaToggleOn, FaToggleOff } from 'react-icons/fa';
 import { getAllUsers, createUser, toggleUserStatus } from '../../services/api';
 import './Users.css';
 

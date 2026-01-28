@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { toast } from 'react-toastify';
-import { getComplaints, updateComplaint, getAllUsers } from '../../services/api';
+import { getComplaints, updateComplaint } from '../../services/api';
 import { FaEdit, FaTimes } from 'react-icons/fa';
 import '../resident/Complaints.css';
 
@@ -24,7 +24,7 @@ const AdminComplaints = () => {
 
   const fetchData = async () => {
     try {
-      const [complaintsRes, usersRes] = await Promise.all([
+    const [complaintsRes] = await Promise.all([
         getComplaints(),
         getAllUsers()
       ]);

@@ -25,7 +25,7 @@ const allowedOrigins = [
   'http://localhost:3003',
   'http://localhost:3004',
   'https://taupe-rugelach-625903.netlify.app',
-  'https://my-smart-society-admin.netlify.app'
+  'https://my-smart-society-admin.netlify.app',
   'https://my-smart-society-user.netlify.app'
 ].filter(Boolean);
 
