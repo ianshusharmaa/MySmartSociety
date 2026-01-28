@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { getComplaintStats, getPermissionStats, getMaintenanceStats } from '../../services/api';
 import { FaExclamationCircle, FaKey, FaMoneyBill, FaCheckCircle, FaClock, FaUsers, FaExternalLinkAlt } from 'react-icons/fa';
-import '../resident/Dashboard.css';
+import './Dashboard.css';
 
 const AdminDashboard = () => {
   const navigate = useNavigate();
