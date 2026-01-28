@@ -21,6 +21,9 @@ const allowedOrigins = [
   process.env.FRONTEND_URL,
   'http://localhost:3000',
   'http://localhost:3001',
+  'http://localhost:3002',
+  'http://localhost:3003',
+  'http://localhost:3004',
   'https://taupe-rugelach-625903.netlify.app',
   'https://my-smart-society-admin.netlify.app'
   'https://my-smart-society-user.netlify.app'
