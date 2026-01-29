@@ -10,42 +10,48 @@
 /* Welcome page */
 .welcome-container {
   min-height: 100vh;
-  background: linear-gradient(135deg, #e0f2ff 0%, #eef2ff 50%, #fff 100%);
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
   display: flex;
   flex-direction: column;
-  gap: 30px;
-  padding: 40px 24px 60px;
+  gap: 16px;
+  padding: 20px;
+  justify-content: center;
 }
 
 .welcome-hero {
   background: white;
-  border-radius: 16px;
-  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.08);
-  padding: 48px;
+  border-radius: 12px;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
+  padding: 32px;
   display: flex;
   align-items: center;
   justify-content: center;
+  flex-direction: column;
+  text-align: center;
 }
 
 .welcome-copy h1 {
-  font-size: 36px;
-  margin: 12px 0 16px;
-  color: #0f172a;
+  font-size: 28px;
+  margin: 8px 0 12px;
+  color: #1f2937;
   font-weight: 700;
+  line-height: 1.3;
 }
 
 .welcome-copy .lead {
-  color: #64748b;
-  font-size: 16px;
-  max-width: 600px;
-  line-height: 1.6;
+  color: #475569;
+  font-size: 14px;
+  max-width: 100%;
+  line-height: 1.5;
+  margin-bottom: 16px;
 }
 
 .welcome-actions {
   display: flex;
-  gap: 12px;
-  margin: 18px 0 12px;
+  gap: 10px;
+  margin: 14px 0 0;
   flex-wrap: wrap;
+  justify-content: center;
 }
 
 .btn.btn-secondary {
@@ -55,8 +61,16 @@
 
 .btn.btn-ghost {
   background: white;
-  color: #64748b;
-  border: 1px solid #e2e8f0;
+  color: #1f2937;
+  border: 2px solid #e2e8f0;
+  font-weight: 600;
+}
+
+.btn.btn-ghost:hover {
+  background: #f8fafc;
+  border-color: #667eea;
+  color: #667eea;
+  box-shadow: 0 4px 12px rgba(102, 126, 234, 0.15);
 }
 
 .welcome-demo {
@@ -68,55 +82,58 @@
 }
 
 .welcome-card h3 {
-  font-size: 18px;
-  margin: 12px 0 8px;
-  color: #0f172a;
+  font-size: 16px;
+  margin: 10px 0 6px;
+  color: #1f2937;
   font-weight: 600;
 }
 
 .welcome-card p {
-  color: #64748b;
-  font-size: 14px;
-  line-height: 1.6;
+  color: #6b7280;
+  font-size: 13px;
+  line-height: 1.4;
   margin: 0;
 }
 
 .card-icon {
-  font-size: 36px;
-  margin-bottom: 12px;
+  font-size: 40px;
+  margin-bottom: 10px;
   display: block;
+  filter: drop-shadow(0 2px 4px rgba(102, 126, 234, 0.1));
 }
 
 .welcome-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-  gap: 20px;
-  max-width: 1200px;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 14px;
+  max-width: 100%;
   margin: 0 auto;
   width: 100%;
 }
 
 .welcome-card {
-  background: white;
+  background: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%);
   border-radius: 12px;
-  padding: 24px;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+  padding: 20px;
+  box-shadow: 0 4px 15px rgba(102, 126, 234, 0.1);
   border: 1px solid #e2e8f0;
   transition: all 0.3s ease;
+  text-align: center;
 }
 
 .welcome-card:hover {
   transform: translateY(-4px);
-  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 12px 30px rgba(102, 126, 234, 0.2);
+  border-color: #667eea;
 }
 
 .eyebrow { 
   text-transform: uppercase; 
   letter-spacing: 0.08em; 
-  font-size: 12px; 
-  color: #0ea5e9; 
+  font-size: 11px; 
+  color: #667eea;
   font-weight: 700;
-  margin-bottom: 8px;
+  margin-bottom: 6px;
 }
 
 .auth-card {
@@ -200,36 +217,59 @@
   color: var(--text-light);
 }
 
+@media (max-width: 1024px) {
+  .welcome-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
 @media (max-width: 768px) {
   .welcome-container {
-    padding: 24px 16px 40px;
-    gap: 20px;
+    padding: 16px 12px 24px;
+    gap: 12px;
   }
 
   .welcome-hero {
-    padding: 32px 20px;
-    border-radius: 12px;
+    padding: 24px 16px;
+    border-radius: 10px;
   }
 
   .welcome-copy h1 {
-    font-size: 26px;
+    font-size: 22px;
+    margin: 6px 0 10px;
   }
 
   .welcome-copy .lead {
-    font-size: 14px;
+    font-size: 13px;
+    margin-bottom: 12px;
   }
 
   .welcome-actions {
-    margin: 16px 0 10px;
+    margin: 12px 0 0;
+    gap: 8px;
   }
 
   .welcome-grid {
     grid-template-columns: 1fr;
-    gap: 16px;
+    gap: 12px;
   }
 
   .welcome-card {
-    padding: 20px;
+    padding: 14px;
+  }
+
+  .welcome-card h3 {
+    font-size: 14px;
+    margin: 6px 0 4px;
+  }
+
+  .welcome-card p {
+    font-size: 12px;
+  }
+
+  .card-icon {
+    font-size: 28px;
+    margin-bottom: 6px;
   }
 
   .auth-card {
