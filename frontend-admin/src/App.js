@@ -3,6 +3,8 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { AuthProvider } from './context/AuthContext';
+import { CssBaseline, ThemeProvider } from '@mui/material';
+import theme from './assets/theme';
 
 // Auth pages
 import Login from './pages/Login';
@@ -25,26 +27,29 @@ import AdminLayout from './layout/AdminLayout';
 function App() {
   return (
     <AuthProvider>
-      <Router>
-        <div className="App">
-          <Routes>
-            {/* Public Routes */}
-            <Route path="/" element={<Welcome />} />
-            <Route path="/login" element={<Login />} />
-            <Route path="/register" element={<Register />} />
+      <ThemeProvider theme={theme}>
+        <CssBaseline />
+        <Router>
+          <div className="App">
+            <Routes>
+              {/* Public Routes */}
+              <Route path="/" element={<Welcome />} />
+              <Route path="/login" element={<Login />} />
+              <Route path="/register" element={<Register />} />
 
-            {/* Admin Panel Only */}
-            <Route path="/admin/dashboard" element={<AdminRoute><AdminLayout><AdminDashboard /></AdminLayout></AdminRoute>} />
-            <Route path="/admin/complaints" element={<AdminRoute><AdminLayout><AdminComplaints /></AdminLayout></AdminRoute>} />
-            <Route path="/admin/permissions" element={<AdminRoute><AdminLayout><AdminPermissions /></AdminLayout></AdminRoute>} />
-            <Route path="/admin/maintenance" element={<AdminRoute><AdminLayout><AdminMaintenance /></AdminLayout></AdminRoute>} />
-            <Route path="/admin/events" element={<AdminRoute><AdminLayout><AdminEvents /></AdminLayout></AdminRoute>} />
-            <Route path="/admin/notices" element={<AdminRoute><AdminLayout><AdminNotices /></AdminLayout></AdminRoute>} />
-            <Route path="/admin/users" element={<AdminRoute><AdminLayout><AdminUsers /></AdminLayout></AdminRoute>} />
-          </Routes>
-          <ToastContainer position="top-right" autoClose={3000} />
-        </div>
-      </Router>
+              {/* Admin Panel Only */}
+              <Route path="/admin/dashboard" element={<AdminRoute><AdminLayout><AdminDashboard /></AdminLayout></AdminRoute>} />
+              <Route path="/admin/complaints" element={<AdminRoute><AdminLayout><AdminComplaints /></AdminLayout></AdminRoute>} />
+              <Route path="/admin/permissions" element={<AdminRoute><AdminLayout><AdminPermissions /></AdminLayout></AdminRoute>} />
+              <Route path="/admin/maintenance" element={<AdminRoute><AdminLayout><AdminMaintenance /></AdminLayout></AdminRoute>} />
+              <Route path="/admin/events" element={<AdminRoute><AdminLayout><AdminEvents /></AdminLayout></AdminRoute>} />
+              <Route path="/admin/notices" element={<AdminRoute><AdminLayout><AdminNotices /></AdminLayout></AdminRoute>} />
+              <Route path="/admin/users" element={<AdminRoute><AdminLayout><AdminUsers /></AdminLayout></AdminRoute>} />
+            </Routes>
+            <ToastContainer position="top-right" autoClose={3000} />
+          </div>
+        </Router>
+      </ThemeProvider>
     </AuthProvider>
   );
 }

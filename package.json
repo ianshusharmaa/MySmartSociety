@@ -13,23 +13,37 @@
     "dev:all:admin": "concurrently \"npm run dev\" \"npm run client:admin\"",
     "dev:all:panels": "concurrently \"npm run dev\" \"npm run client:user\" \"npm run client:admin\""
   },
-  "keywords": ["society", "management", "complaint", "maintenance", "payment"],
+  "keywords": [
+    "society",
+    "management",
+    "complaint",
+    "maintenance",
+    "payment"
+  ],
   "author": "Anshu Sharma",
   "license": "MIT",
   "dependencies": {
-    "express": "^4.18.2",
-    "mongoose": "^7.6.3",
+    "@emotion/react": "^11.14.0",
+    "@emotion/styled": "^11.14.1",
+    "@mui/icons-material": "^7.3.7",
+    "@mui/material": "^7.3.7",
     "bcryptjs": "^2.4.3",
-    "jsonwebtoken": "^9.0.2",
-    "dotenv": "^16.3.1",
+    "chart.js": "^4.5.1",
     "cors": "^2.8.5",
-    "razorpay": "^2.9.2",
+    "dotenv": "^16.3.1",
+    "express": "^4.18.2",
+    "express-validator": "^7.0.1",
+    "jsonwebtoken": "^9.0.2",
+    "mongoose": "^7.6.3",
     "multer": "^1.4.5-lts.1",
     "nodemailer": "^6.9.7",
-    "express-validator": "^7.0.1"
+    "prop-types": "^15.8.1",
+    "razorpay": "^2.9.2",
+    "react-chartjs-2": "^5.3.1",
+    "react-router-dom": "^7.13.0"
   },
   "devDependencies": {
-    "nodemon": "^3.0.1",
-    "concurrently": "^8.2.2"
+    "concurrently": "^8.2.2",
+    "nodemon": "^3.0.1"
   }
 }
