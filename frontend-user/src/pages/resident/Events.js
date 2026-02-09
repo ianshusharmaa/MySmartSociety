@@ -14,10 +14,13 @@ import {
   Stack,
   TextField,
   Typography,
+  Tooltip,
 } from '@mui/material';
 import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
 import TrendingUpIcon from '@mui/icons-material/TrendingUp';
 import PaymentIcon from '@mui/icons-material/Payment';
+import EventIcon from '@mui/icons-material/Event';
+import GroupIcon from '@mui/icons-material/Group';
 
 const Events = () => {
   const [events, setEvents] = useState([]);

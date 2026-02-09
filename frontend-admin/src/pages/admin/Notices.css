@@ -59,6 +59,24 @@
   gap: 8px;
 }
 
+.notice-header-meta {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex: 1;
+}
+
+.notice-header-icon {
+  font-size: 24px;
+  color: var(--primary-color);
+}
+
+.notice-header-badges {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
 .notice-content {
   color: var(--text-dark);
   line-height: 1.8;
@@ -75,9 +93,23 @@
   color: var(--text-light);
 }
 
+.notice-footer-meta {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  font-size: 13px;
+  color: var(--text-light);
+}
+
 .notice-expiry {
   color: var(--warning-color);
   font-weight: 500;
+}
+
+.notice-form-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
 }
 
 @media (max-width: 768px) {

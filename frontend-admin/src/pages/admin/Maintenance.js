@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { getMaintenanceRecords, createMaintenanceRecord, getAllUsers } from '../../services/api';
 import { FaMoneyBill, FaPlus, FaTimes, FaFilter, FaCheckCircle, FaClock, FaExclamationTriangle } from 'react-icons/fa';
 import { showToast } from '../../utils/notifications';
-import './Permissions.css';
+import './Maintenance.css';
 
 const AdminMaintenance = () => {
   const [records, setRecords] = useState([]);
@@ -189,8 +189,8 @@ const AdminMaintenance = () => {
           {filteredRecords.map((record) => (
             <div key={record._id} className="complaint-card">
               <div className="complaint-header">
-                <div style={{ display: 'flex', alignItems: 'center', gap: '12px', flex: 1 }}>
-                  <span style={{ fontSize: '24px', color: '#10b981' }}><FaMoneyBill /></span>
+                <div className="maintenance-header-meta">
+                  <span className="maintenance-header-icon"><FaMoneyBill /></span>
                   <h3>{record.resident?.name || 'N/A'}</h3>
                 </div>
                 <span className={getStatusBadge(record.status)}>
@@ -204,12 +204,12 @@ const AdminMaintenance = () => {
                 <p><strong>Phone:</strong> {record.resident?.phone || 'N/A'}</p>
               </div>
 
-              <div style={{ background: 'linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%)', padding: '16px', borderRadius: '12px', marginBottom: '16px' }}>
-                <p style={{ fontSize: '14px', marginBottom: '8px', color: '#0369a1' }}><strong>Period:</strong> {monthNames[record.period.month - 1]} {record.period.year}</p>
-                <p style={{ fontSize: '24px', fontWeight: 700, color: '#0c4a6e', margin: 0 }}>₹{record.amount.toLocaleString()}</p>
+              <div className="maintenance-summary">
+                <p className="maintenance-period"><strong>Period:</strong> {monthNames[record.period.month - 1]} {record.period.year}</p>
+                <p className="maintenance-amount">₹{record.amount.toLocaleString()}</p>
               </div>
 
-              <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '13px', color: '#64748b' }}>
+              <div className="maintenance-dates">
                 <span>Due: {new Date(record.dueDate).toLocaleDateString('en-GB')}</span>
                 {record.paymentDate && (
                   <span>Paid: {new Date(record.paymentDate).toLocaleDateString('en-GB')}</span>
@@ -217,7 +217,7 @@ const AdminMaintenance = () => {
               </div>
 
               {record.transactionId && (
-                <p style={{ fontSize: '12px', color: '#10b981', marginTop: '8px' }}>
+                <p className="maintenance-transaction">
                   <strong>Transaction ID:</strong> {record.transactionId}
                 </p>
               )}
@@ -267,7 +267,7 @@ const AdminMaintenance = () => {
                 />
               </div>
 
-              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '20px' }}>
+              <div className="maintenance-form-grid">
                 <div className="form-group">
                   <label>Month *</label>
                   <select

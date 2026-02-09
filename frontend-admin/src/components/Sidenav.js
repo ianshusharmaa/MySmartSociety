@@ -1,100 +1,62 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
-import {
-  Box,
-  Divider,
-  Drawer,
-  List,
-  ListItem,
-  ListItemButton,
-  ListItemIcon,
-  ListItemText,
-  Typography,
-} from '@mui/material';
+import { Divider, Drawer } from '@mui/material';
 import ApartmentIcon from '@mui/icons-material/Apartment';
 import adminRoutes from '../routes/adminRoutes';
+import './Sidenav.css';
 
 const drawerWidth = 260;
 
 const Sidenav = ({ mobileOpen, onClose }) => {
-  const drawerWidth = 260;
   const drawerContent = (
-    <Box sx={{ height: '100%', display: 'flex', flexDirection: 'column' }}>
-      <Box sx={{ px: 2, py: 2.5, display: 'flex', alignItems: 'center', gap: 1.5 }}>
-        <ApartmentIcon color="primary" />
-        <Box>
-          <Typography variant="subtitle1" fontWeight={700}>
-            My Society
-          </Typography>
-          <Typography variant="caption" color="text.secondary">
-            Admin Panel
-          </Typography>
-        </Box>
-      </Box>
+    <div className="sidenav-container">
+      <div className="sidenav-header">
+        <ApartmentIcon className="sidenav-header-icon" />
+        <div className="sidenav-header-info">
+          <h3>My Society</h3>
+          <p>Admin Panel</p>
+        </div>
+      </div>
       <Divider />
-      <List sx={{ px: 1, py: 1 }}>
+      <div className="sidenav-list">
         {adminRoutes.map((route) => (
-          <ListItem key={route.path} disablePadding sx={{ mb: 0.5 }}>
-            <ListItemButton
-              component={NavLink}
+          <div key={route.path} className="sidenav-list-item">
+            <NavLink
               to={route.path}
-              sx={{
-                borderRadius: 2,
-                px: 2,
-                '&.active': {
-                  backgroundColor: 'primary.main',
-                  color: 'primary.contrastText',
-                  '& .MuiListItemIcon-root': {
-                    color: 'inherit',
-                  },
-                },
-              }}
+              className={({ isActive }) => 
+                `sidenav-list-button ${isActive ? 'active' : ''}`
+              }
             >
-              <ListItemIcon sx={{ minWidth: 36, color: 'text.secondary' }}>
-                {route.icon}
-              </ListItemIcon>
-              <ListItemText primary={route.label} />
-            </ListItemButton>
-          </ListItem>
+              <span className="sidenav-icon">{route.icon}</span>
+              <span className="sidenav-text">{route.label}</span>
+            </NavLink>
+          </div>
         ))}
-      </List>
-      <Box sx={{ mt: 'auto', p: 2 }}>
-        <Typography variant="caption" color="text.secondary" sx={{ display: 'block' }}>
-          MySmartSociety v1.0
-        </Typography>
-        <Typography variant="caption" color="primary" sx={{ display: 'block', mt: 0.5, fontWeight: 600 }}>
-          Developed by Anshu Sharma
-        </Typography>
-      </Box>
-    </Box>
+      </div>
+      <div className="sidenav-footer">
+        <span className="sidenav-footer-version">MySmartSociety v1.0</span>
+        <span className="sidenav-footer-credit">Developed by Anshu Sharma</span>
+      </div>
+    </div>
   );
 
   return (
-    <Box component="nav" sx={{ width: { md: drawerWidth }, flexShrink: { md: 0 } }}>
+    <nav className="sidenav-nav">
       <Drawer
         variant="temporary"
         open={mobileOpen}
         onClose={onClose}
-        ModalProps={{ keepMounted: true }}
-        sx={{
-          display: { xs: 'block', md: 'none' },
-          '& .MuiDrawer-paper': { width: drawerWidth, boxSizing: 'border-box' },
+        ModalProps={{
+          keepMounted: true,
+          BackdropProps: {
+            className: 'sidenav-drawer-backdrop',
+          },
         }}
+        classes={{ paper: 'sidenav-drawer' }}
       >
         {drawerContent}
       </Drawer>
-      <Drawer
-        variant="temporary"
-        open={mobileOpen}
-        onClose={onClose}
-        sx={{
-          display: { xs: 'none', md: 'block' },
-          '& .MuiDrawer-paper': { width: drawerWidth, boxSizing: 'border-box' },
-        }}
-      >
-        {drawerContent}
-      </Drawer>
-    </Box>
+    </nav>
   );
 };
 

@@ -1,5 +1,9 @@
 import React from 'react';
 import { Box, Container, Typography, Link, Stack, Grid, Divider } from '@mui/material';
+import LinkedInIcon from '@mui/icons-material/LinkedIn';
+import InstagramIcon from '@mui/icons-material/Instagram';
+import GitHubIcon from '@mui/icons-material/GitHub';
+import EmailIcon from '@mui/icons-material/Email';
 
 const Footer = () => {
   return (
@@ -85,15 +89,26 @@ const Footer = () => {
               Contact
             </Typography>
             <Stack spacing={1}>
-              <Typography variant="body2" color="text.secondary">
+              <Link href="mailto:anshukumar.sharma.btechcse@ghrua.edu.in" variant="body2" color="text.secondary" underline="hover">
                 Email: anshukumar.sharma.btechcse@ghrua.edu.in
-              </Typography>
+              </Link>
               <Typography variant="body2" color="text.secondary">
                 Phone: +91 XXXXX XXXXX
               </Typography>
-              <Typography variant="body2" color="text.secondary">
-                Address: Your Address Here
-              </Typography>
+              <Stack direction="row" spacing={1}>
+                <Link href="https://www.linkedin.com/in/ianshusharma2005/" target="_blank" rel="noreferrer" color="text.secondary" aria-label="LinkedIn">
+                  <LinkedInIcon />
+                </Link>
+                <Link href="https://www.instagram.com/ianshusharmaa/" target="_blank" rel="noreferrer" color="text.secondary" aria-label="Instagram">
+                  <InstagramIcon />
+                </Link>
+                <Link href="https://github.com/ianshusharmaa" target="_blank" rel="noreferrer" color="text.secondary" aria-label="GitHub">
+                  <GitHubIcon />
+                </Link>
+                <Link href="mailto:anshukumar.sharma.btechcse@ghrua.edu.in" color="text.secondary" aria-label="Email">
+                  <EmailIcon />
+                </Link>
+              </Stack>
             </Stack>
           </Grid>
         </Grid>

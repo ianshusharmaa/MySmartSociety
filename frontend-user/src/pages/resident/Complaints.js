@@ -13,10 +13,15 @@ import {
   DialogActions,
   DialogContent,
   DialogTitle,
+  FormControl,
   Grid,
+  InputLabel,
+  MenuItem,
+  Select,
   Stack,
   TextField,
   Typography,
+  LinearProgress,
 } from '@mui/material';
 import AddIcon from '@mui/icons-material/Add';
 import AssignmentIcon from '@mui/icons-material/Assignment';
@@ -25,6 +30,9 @@ const Complaints = () => {
   const [complaints, setComplaints] = useState([]);
   const [loading, setLoading] = useState(true);
   const [showModal, setShowModal] = useState(false);
+  const [filterStatus, setFilterStatus] = useState('all');
+  const [filterPriority, setFilterPriority] = useState('all');
+  const [filterCategory, setFilterCategory] = useState('all');
   const [formData, setFormData] = useState({
     title: '',
     category: 'water',
@@ -104,6 +112,119 @@ const Complaints = () => {
           </Button>
         </Stack>
 
+        {/* Statistics Cards */}
+        {complaints.length > 0 && (
+          <Grid container spacing={3}>
+            <Grid item xs={12} sm={6} md={3}>
+              <Card sx={{ bgcolor: 'rgba(245, 158, 11, 0.1)', border: '1px solid #e5e7eb' }}>
+                <CardContent>
+                  <Typography variant="body2" sx={{ color: '#6b7280', mb: 1 }}>
+                    Total Complaints
+                  </Typography>
+                  <Typography variant="h5" fontWeight={800} sx={{ color: '#f59e0b' }}>
+                    {complaints.length}
+                  </Typography>
+                </CardContent>
+              </Card>
+            </Grid>
+            <Grid item xs={12} sm={6} md={3}>
+              <Card sx={{ bgcolor: 'rgba(245, 158, 11, 0.1)', border: '1px solid #e5e7eb' }}>
+                <CardContent>
+                  <Typography variant="body2" sx={{ color: '#6b7280', mb: 1 }}>
+                    Pending
+                  </Typography>
+                  <Typography variant="h5" fontWeight={800} sx={{ color: '#f59e0b' }}>
+                    {complaints.filter(c => c.status === 'pending').length}
+                  </Typography>
+                </CardContent>
+              </Card>
+            </Grid>
+            <Grid item xs={12} sm={6} md={3}>
+              <Card sx={{ bgcolor: 'rgba(59, 130, 246, 0.1)', border: '1px solid #e5e7eb' }}>
+                <CardContent>
+                  <Typography variant="body2" sx={{ color: '#6b7280', mb: 1 }}>
+                    In Progress
+                  </Typography>
+                  <Typography variant="h5" fontWeight={800} sx={{ color: '#3b82f6' }}>
+                    {complaints.filter(c => c.status === 'in-progress').length}
+                  </Typography>
+                </CardContent>
+              </Card>
+            </Grid>
+            <Grid item xs={12} sm={6} md={3}>
+              <Card sx={{ bgcolor: 'rgba(16, 185, 129, 0.1)', border: '1px solid #e5e7eb' }}>
+                <CardContent>
+                  <Typography variant="body2" sx={{ color: '#6b7280', mb: 1 }}>
+                    Resolved
+                  </Typography>
+                  <Typography variant="h5" fontWeight={800} sx={{ color: '#10b981' }}>
+                    {complaints.filter(c => c.status === 'resolved').length}
+                  </Typography>
+                </CardContent>
+              </Card>
+            </Grid>
+          </Grid>
+        )}
+
+        {/* Filter Section */}
+        {complaints.length > 0 && (
+          <Card sx={{ bgcolor: '#f9fafb', border: '1px solid #e5e7eb' }}>
+            <CardContent>
+              <Typography variant="subtitle2" fontWeight={700} sx={{ mb: 3, color: '#1f2937' }}>
+                FILTERS
+              </Typography>
+              <Grid container spacing={2}>
+                <Grid item xs={12} sm={6} md={4}>
+                  <FormControl fullWidth size="small">
+                    <InputLabel>Status</InputLabel>
+                    <Select
+                      value={filterStatus}
+                      label="Status"
+                      onChange={(e) => setFilterStatus(e.target.value)}
+                    >
+                      <MenuItem value="all">All Statuses</MenuItem>
+                      <MenuItem value="pending">Pending</MenuItem>
+                      <MenuItem value="in-progress">In Progress</MenuItem>
+                      <MenuItem value="resolved">Resolved</MenuItem>
+                    </Select>
+                  </FormControl>
+                </Grid>
+                <Grid item xs={12} sm={6} md={4}>
+                  <FormControl fullWidth size="small">
+                    <InputLabel>Priority</InputLabel>
+                    <Select
+                      value={filterPriority}
+                      label="Priority"
+                      onChange={(e) => setFilterPriority(e.target.value)}
+                    >
+                      <MenuItem value="all">All Priorities</MenuItem>
+                      <MenuItem value="low">Low</MenuItem>
+                      <MenuItem value="medium">Medium</MenuItem>
+                      <MenuItem value="high">High</MenuItem>
+                    </Select>
+                  </FormControl>
+                </Grid>
+                <Grid item xs={12} sm={6} md={4}>
+                  <FormControl fullWidth size="small">
+                    <InputLabel>Category</InputLabel>
+                    <Select
+                      value={filterCategory}
+                      label="Category"
+                      onChange={(e) => setFilterCategory(e.target.value)}
+                    >
+                      <MenuItem value="all">All Categories</MenuItem>
+                      <MenuItem value="water">Water</MenuItem>
+                      <MenuItem value="electricity">Electricity</MenuItem>
+                      <MenuItem value="maintenance">Maintenance</MenuItem>
+                      <MenuItem value="other">Other</MenuItem>
+                    </Select>
+                  </FormControl>
+                </Grid>
+              </Grid>
+            </CardContent>
+          </Card>
+        )}
+
         {/* Complaints List */}
         {complaints.length === 0 ? (
           <Card sx={{ bgcolor: '#f0f2f5', border: '1px solid #e5e7eb' }}>
@@ -127,26 +248,33 @@ const Complaints = () => {
           </Card>
         ) : (
           <Grid container spacing={3}>
-            {complaints.map((complaint) => (
-              <Grid item xs={12} md={6} key={complaint._id}>
-                <Card
-                  sx={{
-                    height: '100%',
-                    border: '1px solid #e5e7eb',
-                    '&:hover': { boxShadow: 3 },
-                  }}
-                >
-                  <CardContent>
-                    <Stack spacing={2}>
-                      {/* Header */}
-                      <Stack direction="row" justifyContent="space-between" alignItems="flex-start">
-                        <Typography variant="h6" fontWeight={700} sx={{ color: '#1f2937', flex: 1 }}>
-                          {complaint.title}
-                        </Typography>
-                        <Chip
-                          label={getStatusLabel(complaint.status)}
-                          sx={{
-                            bgcolor: getStatusColor(complaint.status),
+            {complaints
+              .filter((complaint) => {
+                if (filterStatus !== 'all' && complaint.status !== filterStatus) return false;
+                if (filterPriority !== 'all' && complaint.priority !== filterPriority) return false;
+                if (filterCategory !== 'all' && complaint.category !== filterCategory) return false;
+                return true;
+              })
+              .map((complaint) => (
+                <Grid item xs={12} md={6} key={complaint._id}>
+                  <Card
+                    sx={{
+                      height: '100%',
+                      border: '1px solid #e5e7eb',
+                      '&:hover': { boxShadow: 3 },
+                    }}
+                  >
+                    <CardContent>
+                      <Stack spacing={2}>
+                        {/* Header */}
+                        <Stack direction="row" justifyContent="space-between" alignItems="flex-start">
+                          <Typography variant="h6" fontWeight={700} sx={{ color: '#1f2937', flex: 1 }}>
+                            {complaint.title}
+                          </Typography>
+                          <Chip
+                            label={getStatusLabel(complaint.status)}
+                            sx={{
+                              bgcolor: getStatusColor(complaint.status),
                             color: 'white',
                             fontWeight: 700,
                             fontSize: 12,

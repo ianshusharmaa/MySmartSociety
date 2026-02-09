@@ -18,6 +18,8 @@ import {
 } from '@mui/material';
 import PersonAddIcon from '@mui/icons-material/PersonAdd';
 import ApartmentIcon from '@mui/icons-material/Apartment';
+import './Register.css';
+import './Register.css';
 
 const Register = () => {
   const [formData, setFormData] = useState({
@@ -349,11 +351,7 @@ const Register = () => {
                 Already have an admin account?{' '}
                 <Link
                   to="/login"
-                  style={{
-                    color: '#1a73e8',
-                    textDecoration: 'none',
-                    fontWeight: 700,
-                  }}
+                  className="admin-register-link"
                 >
                   Login here
                 </Link>

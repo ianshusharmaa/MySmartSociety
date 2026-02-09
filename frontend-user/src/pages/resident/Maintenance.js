@@ -12,10 +12,13 @@ import {
   Grid,
   Stack,
   Typography,
+  LinearProgress,
 } from '@mui/material';
 import PaymentIcon from '@mui/icons-material/Payment';
 import BuildIcon from '@mui/icons-material/Build';
 import ReceiptIcon from '@mui/icons-material/Receipt';
+import CheckCircleIcon from '@mui/icons-material/CheckCircle';
+import ErrorIcon from '@mui/icons-material/Error';
 
 const Maintenance = () => {
   const [records, setRecords] = useState([]);
@@ -125,6 +128,60 @@ const Maintenance = () => {
         <Typography variant="h4" fontWeight={800} sx={{ color: '#1f2937' }}>
           Maintenance Payments
         </Typography>
+
+        {/* Statistics Cards */}
+        {records.length > 0 && (
+          <Grid container spacing={3}>
+            <Grid item xs={12} sm={6} md={3}>
+              <Card sx={{ bgcolor: 'rgba(59, 130, 246, 0.1)', border: '1px solid #e5e7eb' }}>
+                <CardContent>
+                  <Typography variant="body2" sx={{ color: '#6b7280', mb: 1 }}>
+                    Total Records
+                  </Typography>
+                  <Typography variant="h5" fontWeight={800} sx={{ color: '#3b82f6' }}>
+                    {records.length}
+                  </Typography>
+                </CardContent>
+              </Card>
+            </Grid>
+            <Grid item xs={12} sm={6} md={3}>
+              <Card sx={{ bgcolor: 'rgba(245, 158, 11, 0.1)', border: '1px solid #e5e7eb' }}>
+                <CardContent>
+                  <Typography variant="body2" sx={{ color: '#6b7280', mb: 1 }}>
+                    Pending
+                  </Typography>
+                  <Typography variant="h5" fontWeight={800} sx={{ color: '#f59e0b' }}>
+                    {records.filter(r => r.status === 'pending').length}
+                  </Typography>
+                </CardContent>
+              </Card>
+            </Grid>
+            <Grid item xs={12} sm={6} md={3}>
+              <Card sx={{ bgcolor: 'rgba(16, 185, 129, 0.1)', border: '1px solid #e5e7eb' }}>
+                <CardContent>
+                  <Typography variant="body2" sx={{ color: '#6b7280', mb: 1 }}>
+                    Paid
+                  </Typography>
+                  <Typography variant="h5" fontWeight={800} sx={{ color: '#10b981' }}>
+                    {records.filter(r => r.status === 'paid').length}
+                  </Typography>
+                </CardContent>
+              </Card>
+            </Grid>
+            <Grid item xs={12} sm={6} md={3}>
+              <Card sx={{ bgcolor: 'rgba(239, 68, 68, 0.1)', border: '1px solid #e5e7eb' }}>
+                <CardContent>
+                  <Typography variant="body2" sx={{ color: '#6b7280', mb: 1 }}>
+                    Pending Amount
+                  </Typography>
+                  <Typography variant="h5" fontWeight={800} sx={{ color: '#ef4444' }}>
+                    ₹{records.filter(r => r.status === 'pending').reduce((sum, r) => sum + r.amount, 0).toLocaleString()}
+                  </Typography>
+                </CardContent>
+              </Card>
+            </Grid>
+          </Grid>
+        )}
 
         {/* Maintenance Records */}
         {records.length === 0 ? (

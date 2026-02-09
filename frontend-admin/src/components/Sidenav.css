@@ -1,0 +1,111 @@
+.sidenav-container {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.sidenav-header {
+  padding: 20px 16px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.sidenav-header-icon {
+  color: #1976d2;
+  font-size: 28px;
+}
+
+.sidenav-header-info h3 {
+  font-size: 1.125rem;
+  font-weight: 700;
+  margin: 0 0 2px 0;
+  color: #1f2937;
+}
+
+.sidenav-header-info p {
+  font-size: 0.75rem;
+  color: #6b7280;
+  margin: 0;
+}
+
+.sidenav-list {
+  padding: 8px;
+}
+
+.sidenav-list-item {
+  margin-bottom: 4px;
+}
+
+.sidenav-list-button {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  padding: 10px 16px;
+  border-radius: 8px;
+  border: none;
+  background: transparent;
+  color: #374151;
+  text-decoration: none;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+  gap: 12px;
+}
+
+.sidenav-list-button:hover {
+  background-color: rgba(0, 0, 0, 0.04);
+}
+
+.sidenav-list-button.active {
+  background-color: #1976d2;
+  color: white;
+}
+
+.sidenav-list-button.active .sidenav-icon {
+  color: white;
+}
+
+.sidenav-icon {
+  min-width: 36px;
+  color: #6b7280;
+  font-size: 20px;
+}
+
+.sidenav-text {
+  font-size: 0.875rem;
+  font-weight: 500;
+}
+
+.sidenav-footer {
+  margin-top: auto;
+  padding: 16px;
+}
+
+.sidenav-footer-version {
+  font-size: 0.75rem;
+  color: #6b7280;
+  display: block;
+  margin: 0;
+}
+
+.sidenav-footer-credit {
+  font-size: 0.75rem;
+  color: #1976d2;
+  display: block;
+  margin: 4px 0 0 0;
+  font-weight: 600;
+}
+
+.sidenav-nav {
+  width: 0;
+  flex-shrink: 0;
+}
+
+.sidenav-drawer {
+  width: 260px;
+}
+
+.sidenav-drawer-backdrop {
+  backdrop-filter: blur(4px);
+  background-color: rgba(15, 23, 42, 0.35);
+}

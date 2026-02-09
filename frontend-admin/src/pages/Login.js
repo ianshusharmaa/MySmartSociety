@@ -18,6 +18,8 @@ import {
 } from '@mui/material';
 import LockIcon from '@mui/icons-material/Lock';
 import ApartmentIcon from '@mui/icons-material/Apartment';
+import './Login.css';
+import './Login.css';
 
 const Login = () => {
   const [formData, setFormData] = useState({ email: '', password: '' });
@@ -202,11 +204,7 @@ const Login = () => {
                 Need an admin account?{' '}
                 <Link
                   to="/register"
-                  style={{
-                    color: '#1a73e8',
-                    textDecoration: 'none',
-                    fontWeight: 700,
-                  }}
+                  className="admin-login-link"
                 >
                   Create one here
                 </Link>

@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { getEvents, createEvent, updateEvent, deleteEvent } from '../../services/api';
 import { FaCalendar, FaPlus, FaEdit, FaTrash, FaTimes, FaUsers, FaRupeeSign } from 'react-icons/fa';
 import { showToast, showConfirm } from '../../utils/notifications';
-import './Permissions.css';
+import './Events.css';
 
 const AdminEvents = () => {
   const [events, setEvents] = useState([]);
@@ -162,11 +162,11 @@ const AdminEvents = () => {
           {events.map((event) => (
             <div key={event._id} className="complaint-card">
               <div className="complaint-header">
-                <div style={{ display: 'flex', alignItems: 'center', gap: '12px', flex: 1 }}>
-                  <span style={{ fontSize: '24px', color: '#667eea' }}><FaCalendar /></span>
+                <div className="event-header-meta">
+                  <span className="event-header-icon"><FaCalendar /></span>
                   <h3>{event.title}</h3>
                 </div>
-                <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap' }}>
+                <div className="event-header-badges">
                   <span className={getStatusBadge(event.status)}>
                     {event.status}
                   </span>
@@ -250,7 +250,7 @@ const AdminEvents = () => {
                 />
               </div>
 
-              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '20px' }}>
+              <div className="event-form-grid">
                 <div className="form-group">
                   <label>Category</label>
                   <select
@@ -288,7 +288,7 @@ const AdminEvents = () => {
                 </div>
               </div>
 
-              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '20px' }}>
+              <div className="event-form-grid">
                 <div className="form-group">
                   <label>Start Date</label>
                   <input

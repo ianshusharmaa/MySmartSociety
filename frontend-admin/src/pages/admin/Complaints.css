@@ -1,53 +1,286 @@
-.page-container {
+.complaints-container {
   max-width: 100%;
   margin: 0;
   padding: 24px 24px 24px 0;
+  animation: fadeIn 0.5s ease-out;
 }
 
-.page-header {
+.complaints-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 30px;
+  margin-bottom: 24px;
+  gap: 16px;
 }
 
-.page-header h1 {
-  font-size: 28px;
-  color: var(--text-dark);
+.complaints-title {
+  font-size: 2.125rem;
+  font-weight: 700;
+  margin: 0 0 4px 0;
 }
 
-.empty-state {
-  text-align: center;
-  padding: 60px 20px;
-  background: white;
+.complaints-subtitle {
+  font-size: 0.875rem;
+  color: #6b7280;
+  margin: 0;
+}
+
+.btn-export {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  border-radius: 8px;
+  text-transform: none;
+  font-weight: 600;
+}
+
+/* Stats Grid */
+.stats-grid {
+  margin-bottom: 16px;
+}
+
+.stat-card-mini {
   border-radius: 12px;
+  background: #ffffff;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s, box-shadow 0.2s;
 }
 
-.empty-state p {
+.stat-card-mini:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.stat-card-mini .MuiCardContent-root {
+  padding: 16px;
+}
+
+.stat-mini-label {
+  font-size: 0.75rem;
+  color: #6b7280;
+  margin: 0 0 8px 0;
+  font-weight: 500;
+  text-transform: uppercase;
+}
+
+.stat-mini-value {
+  font-size: 1.75rem;
+  font-weight: 700;
+  margin: 0 0 8px 0;
+  color: #1f2937;
+}
+
+.stat-mini-progress {
+  border-radius: 4px;
+  height: 6px;
+}
+
+.stat-mini-progress.warning {
+  background-color: #fef3c7;
+}
+
+.stat-mini-progress.warning .MuiLinearProgress-bar {
+  background-color: #f59e0b;
+}
+
+.stat-mini-progress.info {
+  background-color: #dbeafe;
+}
+
+.stat-mini-progress.info .MuiLinearProgress-bar {
+  background-color: #3b82f6;
+}
+
+.stat-mini-progress.success {
+  background-color: #d1fae5;
+}
+
+.stat-mini-progress.success .MuiLinearProgress-bar {
+  background-color: #10b981;
+}
+
+.stat-mini-progress.error {
+  background-color: #fee2e2;
+}
+
+.stat-mini-progress.error .MuiLinearProgress-bar {
+  background-color: #ef4444;
+}
+
+/* Filter Card */
+.filter-card {
+  border-radius: 12px;
+  background: #ffffff;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  margin-bottom: 16px;
+}
+
+.filter-content {
+  padding: 16px;
+}
+
+.filter-row {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+.search-field {
+  flex: 1;
+  min-width: 250px;
+}
+
+.search-field .MuiOutlinedInput-root {
+  border-radius: 8px;
+}
+
+.filter-select {
+  min-width: 140px;
+}
+
+.filter-select .MuiOutlinedInput-root {
+  border-radius: 8px;
+}
+
+.filter-results {
+  margin-top: 12px;
+  margin-bottom: 0;
+  font-size: 0.875rem;
+  color: #6b7280;
+}
+
+/* Table Card */
+.table-card {
+  border-radius: 12px;
+  background: #ffffff;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+}
+
+.table-header {
+  background-color: #f9fafb;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.table-header .MuiTableCell-root {
+  font-weight: 600;
+  color: #374151;
+  font-size: 0.875rem;
+  padding: 16px;
+}
+
+.table-row {
+  border-bottom: 1px solid #f3f4f6;
+  transition: background-color 0.2s;
+}
+
+.table-row:hover {
+  background-color: #f9fafb;
+}
+
+.table-row .MuiTableCell-root {
+  padding: 14px 16px;
+}
+
+.complaint-title-cell {
+  padding: 12px 16px;
+}
+
+.complaint-title {
+  margin: 0;
+  font-weight: 600;
+  color: #1f2937;
+  font-size: 0.95rem;
+}
+
+.complaint-description-preview {
+  margin: 4px 0 0 0;
+  font-size: 0.8rem;
+  color: #6b7280;
+}
+
+.resident-cell {
+  padding: 4px 0;
+}
+
+.resident-name {
+  margin: 0;
+  font-weight: 600;
+  color: #1f2937;
+  font-size: 0.95rem;
+}
+
+.resident-flat {
+  margin: 2px 0 0 0;
+  font-size: 0.8rem;
+  color: #6b7280;
+}
+
+.category-cell {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.category-icon {
   font-size: 18px;
-  color: var(--text-light);
-  margin-bottom: 20px;
 }
 
-.complaints-grid {
-  display: grid;
-  gap: 20px;
+.category-name {
+  font-weight: 500;
+  color: #1f2937;
 }
 
-.complaint-card {
-  background: white;
-  border-radius: 12px;
-  padding: 25px;
-  box-shadow: var(--shadow);
-  transition: box-shadow 0.3s ease;
+.btn-edit,
+.btn-delete {
+  padding: 6px;
+  margin-left: 4px;
+  color: #6b7280;
+  transition: all 0.2s;
 }
 
-.complaint-card:hover {
-  box-shadow: var(--shadow-lg);
+.btn-edit:hover {
+  color: #3b82f6;
+  background-color: #dbeafe;
+}
+
+.btn-delete:hover {
+  color: #ef4444;
+  background-color: #fee2e2;
+}
+
+/* Dialog Styles */
+.dialog-content {
+  padding: 20px;
+}
+
+.dialog-detail-label {
+  margin: 0 0 8px 0;
+  font-size: 0.95rem;
+  color: #1f2937;
+}
+
+.dialog-content .MuiTextField-root,
+.dialog-content .MuiFormControl-root {
+  margin-bottom: 12px;
+}
+
+.dialog-actions {
+  padding: 12px 16px;
+  gap: 8px;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 .complaint-header {
-  display: flex;
   justify-content: space-between;
   align-items: flex-start;
   margin-bottom: 15px;
@@ -55,32 +288,34 @@
 
 .complaint-header h3 {
   font-size: 20px;
-  color: var(--text-dark);
+  color: #0c2d54;
   flex: 1;
 }
 
 .complaint-category {
-  color: var(--text-light);
+  color: #0c4a6e;
   font-size: 14px;
   margin-bottom: 10px;
 }
 
 .complaint-description {
-  color: var(--text-dark);
+  color: #1a2332;
   line-height: 1.6;
   margin-bottom: 15px;
 }
 
 .complaint-remarks {
-  background: var(--bg-light);
+  background: linear-gradient(135deg, #dbeafe 0%, #f0f8ff 100%);
+  border-left: 4px solid #1e3a8a;
   padding: 12px;
   border-radius: 6px;
   margin-bottom: 15px;
   font-size: 14px;
+  color: #0c4a6e;
 }
 
 .complaint-date {
-  color: var(--text-light);
+  color: #0c4a6e;
   font-size: 13px;
 }
 

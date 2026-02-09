@@ -14,6 +14,7 @@ import {
   Grid,
   Stack,
   Typography,
+  LinearProgress,
 } from '@mui/material';
 import AssignmentIcon from '@mui/icons-material/Assignment';
 import SecurityIcon from '@mui/icons-material/Security';
@@ -23,6 +24,9 @@ import CampaignIcon from '@mui/icons-material/Campaign';
 import EventIcon from '@mui/icons-material/Event';
 import CalendarTodayIcon from '@mui/icons-material/CalendarToday';
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
+import CheckCircleIcon from '@mui/icons-material/CheckCircle';
+import WarningIcon from '@mui/icons-material/Warning';
+import { PieChart, Pie, Cell, ResponsiveContainer, Legend, Tooltip } from 'recharts';
 
 const Dashboard = () => {
   const { user } = useContext(AuthContext);
@@ -33,6 +37,8 @@ const Dashboard = () => {
     pendingPayments: 0,
     notices: 0,
   });
+  const [complaints, setComplaints] = useState([]);
+  const [permissions, setPermissions] = useState([]);
   const [recentNotices, setRecentNotices] = useState([]);
   const [upcomingEvents, setUpcomingEvents] = useState([]);
   const [recentMaintenance, setRecentMaintenance] = useState([]);
@@ -51,6 +57,9 @@ const Dashboard = () => {
         getNotices(),
         getEvents(),
       ]);
+
+      setComplaints(complaintsRes.data);
+      setPermissions(permissionsRes.data);
 
       setStats({
         complaints: complaintsRes.data.length,
@@ -100,6 +109,7 @@ const Dashboard = () => {
       value: stats.complaints,
       path: '/complaints',
       bgColor: 'rgba(239, 68, 68, 0.1)',
+      trend: stats.complaints > 0 ? '+' : '—',
     },
     {
       icon: <SecurityIcon sx={{ fontSize: 40, color: '#f59e0b' }} />,
@@ -107,6 +117,7 @@ const Dashboard = () => {
       value: stats.permissions,
       path: '/permissions',
       bgColor: 'rgba(245, 158, 11, 0.1)',
+      trend: stats.permissions > 0 ? '+' : '—',
     },
     {
       icon: <BuildIcon sx={{ fontSize: 40, color: '#3b82f6' }} />,
@@ -114,6 +125,7 @@ const Dashboard = () => {
       value: stats.pendingPayments,
       path: '/maintenance',
       bgColor: 'rgba(59, 130, 246, 0.1)',
+      trend: stats.pendingPayments > 0 ? '!' : '✓',
     },
     {
       icon: <NotificationsIcon sx={{ fontSize: 40, color: '#8b5cf6' }} />,
@@ -121,8 +133,24 @@ const Dashboard = () => {
       value: stats.notices,
       path: '/notices',
       bgColor: 'rgba(139, 92, 246, 0.1)',
+      trend: stats.notices > 0 ? '+' : '—',
     },
   ];
+
+  // Prepare chart data
+  const complaintStatusData = [
+    { name: 'Pending', value: complaints.filter(c => c.status === 'pending').length },
+    { name: 'In Progress', value: complaints.filter(c => c.status === 'in-progress').length },
+    { name: 'Resolved', value: complaints.filter(c => c.status === 'resolved').length },
+  ].filter(item => item.value > 0);
+
+  const permissionStatusData = [
+    { name: 'Pending', value: permissions.filter(p => p.status === 'pending').length },
+    { name: 'Approved', value: permissions.filter(p => p.status === 'approved').length },
+    { name: 'Rejected', value: permissions.filter(p => p.status === 'rejected').length },
+  ].filter(item => item.value > 0);
+
+  const COLORS = ['#f59e0b', '#3b82f6', '#10b981', '#ef4444'];
 
   return (
     <Container maxWidth="lg">
@@ -234,6 +262,72 @@ const Dashboard = () => {
             </Grid>
           </CardContent>
         </Card>
+
+        {/* Charts Section */}
+        {complaintStatusData.length > 0 || permissionStatusData.length > 0 ? (
+          <Grid container spacing={3}>
+            {complaintStatusData.length > 0 && (
+              <Grid item xs={12} md={6}>
+                <Card sx={{ border: '1px solid #e5e7eb', height: '100%' }}>
+                  <CardContent>
+                    <Typography variant="h6" fontWeight={800} sx={{ color: '#1f2937', mb: 3 }}>
+                      Complaint Status Overview
+                    </Typography>
+                    <ResponsiveContainer width="100%" height={250}>
+                      <PieChart>
+                        <Pie
+                          data={complaintStatusData}
+                          cx="50%"
+                          cy="50%"
+                          innerRadius={60}
+                          outerRadius={100}
+                          paddingAngle={2}
+                          dataKey="value"
+                        >
+                          {complaintStatusData.map((entry, index) => (
+                            <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
+                          ))}
+                        </Pie>
+                        <Tooltip />
+                        <Legend />
+                      </PieChart>
+                    </ResponsiveContainer>
+                  </CardContent>
+                </Card>
+              </Grid>
+            )}
+            {permissionStatusData.length > 0 && (
+              <Grid item xs={12} md={6}>
+                <Card sx={{ border: '1px solid #e5e7eb', height: '100%' }}>
+                  <CardContent>
+                    <Typography variant="h6" fontWeight={800} sx={{ color: '#1f2937', mb: 3 }}>
+                      Permission Status Overview
+                    </Typography>
+                    <ResponsiveContainer width="100%" height={250}>
+                      <PieChart>
+                        <Pie
+                          data={permissionStatusData}
+                          cx="50%"
+                          cy="50%"
+                          innerRadius={60}
+                          outerRadius={100}
+                          paddingAngle={2}
+                          dataKey="value"
+                        >
+                          {permissionStatusData.map((entry, index) => (
+                            <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
+                          ))}
+                        </Pie>
+                        <Tooltip />
+                        <Legend />
+                      </PieChart>
+                    </ResponsiveContainer>
+                  </CardContent>
+                </Card>
+              </Grid>
+            )}
+          </Grid>
+        ) : null}
 
         {/* Recent Notices Section */}
         <Card sx={{ border: '1px solid #e5e7eb' }}>

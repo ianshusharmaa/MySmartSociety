@@ -1,116 +1,106 @@
 import React from 'react';
-import { Box, Container, Typography, Link, Stack, Grid, Divider } from '@mui/material';
+import LinkedInIcon from '@mui/icons-material/LinkedIn';
+import InstagramIcon from '@mui/icons-material/Instagram';
+import GitHubIcon from '@mui/icons-material/GitHub';
+import EmailIcon from '@mui/icons-material/Email';
+import './Footer.css';
 
 const Footer = () => {
   return (
-    <Box
-      component="footer"
-      sx={{
-        py: 4,
-        px: 2,
-        mt: 'auto',
-        backgroundColor: '#f8f9fa',
-        borderTop: '1px solid #e0e0e0',
-      }}
-    >
-      <Container maxWidth="lg">
-        {/* Footer Links Section */}
-        <Grid container spacing={4} sx={{ mb: 4 }}>
+    <footer className="footer-container">
+      <div className="footer-content">
+        <div className="footer-grid">
           {/* About Section */}
-          <Grid item xs={12} sm={6} md={3}>
-            <Typography variant="h6" fontWeight={700} sx={{ mb: 2, color: '#1f2937' }}>
-              About Us
-            </Typography>
-            <Stack spacing={1}>
-              <Link href="#" variant="body2" color="text.secondary" underline="hover">
-                About MySmartSociety
-              </Link>
-              <Link href="#" variant="body2" color="text.secondary" underline="hover">
-                Our Mission
-              </Link>
-              <Link href="#" variant="body2" color="text.secondary" underline="hover">
-                Features
-              </Link>
-              <Link href="#" variant="body2" color="text.secondary" underline="hover">
-                Blog
-              </Link>
-            </Stack>
-          </Grid>
+          <div>
+            <h3 className="footer-section-title">About Us</h3>
+            <div className="footer-links">
+              <a href="#" className="footer-link">About MySmartSociety</a>
+              <a href="#" className="footer-link">Our Mission</a>
+              <a href="#" className="footer-link">Features</a>
+              <a href="#" className="footer-link">Blog</a>
+            </div>
+          </div>
 
           {/* Support Section */}
-          <Grid item xs={12} sm={6} md={3}>
-            <Typography variant="h6" fontWeight={700} sx={{ mb: 2, color: '#1f2937' }}>
-              Support
-            </Typography>
-            <Stack spacing={1}>
-              <Link href="#" variant="body2" color="text.secondary" underline="hover">
-                Help Center
-              </Link>
-              <Link href="#" variant="body2" color="text.secondary" underline="hover">
-                Contact Us
-              </Link>
-              <Link href="#" variant="body2" color="text.secondary" underline="hover">
-                FAQ
-              </Link>
-              <Link href="#" variant="body2" color="text.secondary" underline="hover">
-                Report Issue
-              </Link>
-            </Stack>
-          </Grid>
+          <div>
+            <h3 className="footer-section-title">Support</h3>
+            <div className="footer-links">
+              <a href="#" className="footer-link">Help Center</a>
+              <a href="#" className="footer-link">Contact Us</a>
+              <a href="#" className="footer-link">FAQ</a>
+              <a href="#" className="footer-link">Report Issue</a>
+            </div>
+          </div>
 
           {/* Legal Section */}
-          <Grid item xs={12} sm={6} md={3}>
-            <Typography variant="h6" fontWeight={700} sx={{ mb: 2, color: '#1f2937' }}>
-              Legal
-            </Typography>
-            <Stack spacing={1}>
-              <Link href="#" variant="body2" color="text.secondary" underline="hover">
-                Terms of Service
-              </Link>
-              <Link href="#" variant="body2" color="text.secondary" underline="hover">
-                Privacy Policy
-              </Link>
-              <Link href="#" variant="body2" color="text.secondary" underline="hover">
-                Cookie Policy
-              </Link>
-              <Link href="#" variant="body2" color="text.secondary" underline="hover">
-                Disclaimer
-              </Link>
-            </Stack>
-          </Grid>
+          <div>
+            <h3 className="footer-section-title">Legal</h3>
+            <div className="footer-links">
+              <a href="#" className="footer-link">Terms of Service</a>
+              <a href="#" className="footer-link">Privacy Policy</a>
+              <a href="#" className="footer-link">Cookie Policy</a>
+              <a href="#" className="footer-link">Disclaimer</a>
+            </div>
+          </div>
 
           {/* Contact Section */}
-          <Grid item xs={12} sm={6} md={3}>
-            <Typography variant="h6" fontWeight={700} sx={{ mb: 2, color: '#1f2937' }}>
-              Contact
-            </Typography>
-            <Stack spacing={1}>
-              <Typography variant="body2" color="text.secondary">
+          <div>
+            <h3 className="footer-section-title">Contact</h3>
+            <div className="footer-links">
+              <a className="footer-contact-text footer-link" href="mailto:anshukumar.sharma.btechcse@ghrua.edu.in">
                 Email: anshukumar.sharma.btechcse@ghrua.edu.in
-              </Typography>
-              <Typography variant="body2" color="text.secondary">
-                Phone: +91 XXXXX XXXXX
-              </Typography>
-              <Typography variant="body2" color="text.secondary">
-                Address: Your Address Here
-              </Typography>
-            </Stack>
-          </Grid>
-        </Grid>
+              </a>
+              <p className="footer-contact-text">Phone: +91 XXXXX XXXXX</p>
+              <div className="footer-social">
+                <a
+                  className="footer-social-link"
+                  href="https://www.linkedin.com/in/ianshusharma2005/"
+                  target="_blank"
+                  rel="noreferrer"
+                  aria-label="LinkedIn"
+                >
+                  <LinkedInIcon />
+                </a>
+                <a
+                  className="footer-social-link"
+                  href="https://www.instagram.com/ianshusharmaa/"
+                  target="_blank"
+                  rel="noreferrer"
+                  aria-label="Instagram"
+                >
+                  <InstagramIcon />
+                </a>
+                <a
+                  className="footer-social-link"
+                  href="https://github.com/ianshusharmaa"
+                  target="_blank"
+                  rel="noreferrer"
+                  aria-label="GitHub"
+                >
+                  <GitHubIcon />
+                </a>
+                <a
+                  className="footer-social-link"
+                  href="mailto:anshukumar.sharma.btechcse@ghrua.edu.in"
+                  aria-label="Email"
+                >
+                  <EmailIcon />
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
 
-        <Divider sx={{ my: 3 }} />
+        <hr className="footer-divider" />
 
-        {/* Footer Bottom Section */}
-        <Stack spacing={1} alignItems="center" textAlign="center">
-          <Typography variant="body2" color="text.secondary">
+        <div className="footer-bottom">
+          <p className="footer-copyright">
             © {new Date().getFullYear()} MySmartSociety | All Rights Reserved
-          </Typography>
-          <Typography variant="body2" color="primary" fontWeight={600}>
-            Developed by Anshu Sharma
-          </Typography>
-        </Stack>
-      </Container>
-    </Box>
+          </p>
+          <p className="footer-credit">Developed by Anshu Sharma</p>
+        </div>
+      </div>
+    </footer>
   );
 };
 

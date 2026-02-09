@@ -25,7 +25,7 @@
   font-size: 3rem;
   font-weight: 800;
   margin: 0 0 12px 0;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background: linear-gradient(135deg, #1a73e8 0%, #1557c0 100%);
   background-clip: text;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
@@ -62,7 +62,7 @@
   background: #ffffff;
   border-radius: 10px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
-  border: 1px solid rgba(99, 102, 241, 0.08);
+  border: 1px solid rgba(26, 115, 232, 0.12);
   font-size: 0.95rem;
   font-weight: 500;
   color: #1f2937;
@@ -71,7 +71,7 @@
 
 .feature:hover {
   transform: translateX(4px);
-  box-shadow: 0 6px 16px rgba(99, 102, 241, 0.1);
+  box-shadow: 0 6px 16px rgba(26, 115, 232, 0.16);
 }
 
 .feature-icon {
@@ -98,27 +98,27 @@
 }
 
 .btn-primary {
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background: linear-gradient(135deg, #1a73e8 0%, #1557c0 100%);
   color: white;
-  box-shadow: 0 8px 20px rgba(102, 126, 234, 0.3);
+  box-shadow: 0 8px 20px rgba(26, 115, 232, 0.3);
 }
 
 .btn-primary:hover {
   transform: translateY(-2px);
-  box-shadow: 0 12px 28px rgba(102, 126, 234, 0.4);
+  box-shadow: 0 12px 28px rgba(26, 115, 232, 0.4);
 }
 
 .btn-secondary {
   background: #ffffff;
-  color: #667eea;
-  border: 2px solid #667eea;
+  color: #1a73e8;
+  border: 2px solid #1a73e8;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
 }
 
 .btn-secondary:hover {
-  background: #f0f4ff;
+  background: #e8f0fe;
   transform: translateY(-2px);
-  box-shadow: 0 8px 20px rgba(102, 126, 234, 0.15);
+  box-shadow: 0 8px 20px rgba(26, 115, 232, 0.18);
 }
 
 .welcome-image {

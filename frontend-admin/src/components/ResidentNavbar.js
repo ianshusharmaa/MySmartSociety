@@ -26,9 +26,9 @@ const ResidentNavbar = () => {
           </Link>
 
           <div className="navbar-user">
-            <div className="user-meta" style={{display: 'flex', alignItems: 'center', gap: '10px'}}>
-              <span className="user-name" style={{fontSize: '1.15rem', fontWeight: '700'}}>{user?.name}</span>
-              <span className="user-role" style={{fontSize: '0.7rem', color: '#ffffff', fontWeight: '700', textTransform: 'uppercase', letterSpacing: '0.8px', backgroundColor: '#4f46e5', padding: '4px 10px', borderRadius: '12px', display: 'inline-block'}}>{user?.role}</span>
+            <div className="user-meta">
+              <span className="user-name">{user?.name}</span>
+              <span className="user-role">{user?.role}</span>
             </div>
             <button onClick={handleLogout} className="nav-link logout-btn">
               <FaSignOutAlt /> Logout

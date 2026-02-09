@@ -27,7 +27,7 @@
 
 .maintenance-header h3 {
   font-size: 20px;
-  color: var(--text-dark);
+  color: #0c2d54;
 }
 
 .maintenance-amount {
@@ -41,7 +41,7 @@
 .amount-label {
   display: block;
   font-size: 14px;
-  color: var(--text-light);
+  color: #0c4a6e;
   margin-bottom: 8px;
 }
 
@@ -58,13 +58,13 @@
 
 .maintenance-details p {
   margin: 8px 0;
-  color: var(--text-dark);
+  color: #1a2332;
   font-size: 14px;
 }
 
 .transaction-id {
   font-size: 12px;
-  color: var(--text-light);
+  color: #0c4a6e;
   word-break: break-all;
 }
 

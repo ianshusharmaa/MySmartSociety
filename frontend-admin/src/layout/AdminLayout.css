@@ -1,0 +1,32 @@
+.admin-layout-container {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  background-color: #f5f5f5;
+}
+
+.admin-layout-content-wrapper {
+  display: flex;
+  flex-grow: 1;
+}
+
+.admin-layout-main {
+  flex-grow: 1;
+  padding: 8px 12px;
+  margin-top: 64px;
+  width: 100%;
+  max-width: 100%;
+  transition: filter 0.2s ease, opacity 0.2s ease;
+}
+
+.admin-layout-main.mobile-blur {
+  filter: blur(2px);
+  opacity: 0.8;
+}
+
+@media (min-width: 960px) {
+  .admin-layout-main {
+    padding: 16px 12px;
+    margin-top: 72px;
+  }
+}

@@ -13,7 +13,11 @@ import {
   DialogActions,
   DialogContent,
   DialogTitle,
+  FormControl,
   Grid,
+  InputLabel,
+  MenuItem,
+  Select,
   Stack,
   TextField,
   Typography,
@@ -25,6 +29,7 @@ const Permissions = () => {
   const [permissions, setPermissions] = useState([]);
   const [loading, setLoading] = useState(true);
   const [showModal, setShowModal] = useState(false);
+  const [filterStatus, setFilterStatus] = useState('all');
   const [formData, setFormData] = useState({
     type: 'event',
     title: '',
@@ -76,9 +81,9 @@ const Permissions = () => {
 
   if (loading) {
     return (
-      <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', minHeight: '400px' }}>
+      <div className="loading-container">
         <CircularProgress />
-      </Box>
+      </div>
     );
   }
 
@@ -105,6 +110,85 @@ const Permissions = () => {
           </Button>
         </Stack>
 
+        {/* Statistics Cards */}
+        {permissions.length > 0 && (
+          <Grid container spacing={3}>
+            <Grid item xs={12} sm={6} md={3}>
+              <Card sx={{ bgcolor: 'rgba(245, 158, 11, 0.1)', border: '1px solid #e5e7eb' }}>
+                <CardContent>
+                  <Typography variant="body2" sx={{ color: '#6b7280', mb: 1 }}>
+                    Total Requests
+                  </Typography>
+                  <Typography variant="h5" fontWeight={800} sx={{ color: '#f59e0b' }}>
+                    {permissions.length}
+                  </Typography>
+                </CardContent>
+              </Card>
+            </Grid>
+            <Grid item xs={12} sm={6} md={3}>
+              <Card sx={{ bgcolor: 'rgba(245, 158, 11, 0.1)', border: '1px solid #e5e7eb' }}>
+                <CardContent>
+                  <Typography variant="body2" sx={{ color: '#6b7280', mb: 1 }}>
+                    Pending
+                  </Typography>
+                  <Typography variant="h5" fontWeight={800} sx={{ color: '#f59e0b' }}>
+                    {permissions.filter(p => p.status === 'pending').length}
+                  </Typography>
+                </CardContent>
+              </Card>
+            </Grid>
+            <Grid item xs={12} sm={6} md={3}>
+              <Card sx={{ bgcolor: 'rgba(16, 185, 129, 0.1)', border: '1px solid #e5e7eb' }}>
+                <CardContent>
+                  <Typography variant="body2" sx={{ color: '#6b7280', mb: 1 }}>
+                    Approved
+                  </Typography>
+                  <Typography variant="h5" fontWeight={800} sx={{ color: '#10b981' }}>
+                    {permissions.filter(p => p.status === 'approved').length}
+                  </Typography>
+                </CardContent>
+              </Card>
+            </Grid>
+            <Grid item xs={12} sm={6} md={3}>
+              <Card sx={{ bgcolor: 'rgba(239, 68, 68, 0.1)', border: '1px solid #e5e7eb' }}>
+                <CardContent>
+                  <Typography variant="body2" sx={{ color: '#6b7280', mb: 1 }}>
+                    Rejected
+                  </Typography>
+                  <Typography variant="h5" fontWeight={800} sx={{ color: '#ef4444' }}>
+                    {permissions.filter(p => p.status === 'rejected').length}
+                  </Typography>
+                </CardContent>
+              </Card>
+            </Grid>
+          </Grid>
+        )}
+
+        {/* Filter Section */}
+        {permissions.length > 0 && (
+          <Card sx={{ bgcolor: '#f9fafb', border: '1px solid #e5e7eb' }}>
+            <CardContent>
+              <Typography variant="subtitle2" fontWeight={700} sx={{ mb: 2, color: '#1f2937' }}>
+                FILTER
+              </Typography>
+              <FormControl sx={{ minWidth: 200 }}>
+                <InputLabel>Status</InputLabel>
+                <Select
+                  value={filterStatus}
+                  label="Status"
+                  onChange={(e) => setFilterStatus(e.target.value)}
+                  size="small"
+                >
+                  <MenuItem value="all">All Statuses</MenuItem>
+                  <MenuItem value="pending">Pending</MenuItem>
+                  <MenuItem value="approved">Approved</MenuItem>
+                  <MenuItem value="rejected">Rejected</MenuItem>
+                </Select>
+              </FormControl>
+            </CardContent>
+          </Card>
+        )}
+
         {/* Permissions List */}
         {permissions.length === 0 ? (
           <Card sx={{ bgcolor: '#f0f2f5', border: '1px solid #e5e7eb' }}>
@@ -128,21 +212,26 @@ const Permissions = () => {
           </Card>
         ) : (
           <Grid container spacing={3}>
-            {permissions.map((permission) => (
-              <Grid item xs={12} md={6} key={permission._id}>
-                <Card
-                  sx={{
-                    height: '100%',
-                    border: '1px solid #e5e7eb',
-                    '&:hover': { boxShadow: 3 },
-                  }}
-                >
-                  <CardContent>
-                    <Stack spacing={2}>
-                      {/* Header */}
-                      <Stack direction="row" justifyContent="space-between" alignItems="flex-start">
-                        <Typography variant="h6" fontWeight={700} sx={{ color: '#1f2937', flex: 1 }}>
-                          {permission.title}
+            {permissions
+              .filter((permission) => {
+                if (filterStatus !== 'all' && permission.status !== filterStatus) return false;
+                return true;
+              })
+              .map((permission) => (
+                <Grid item xs={12} md={6} key={permission._id}>
+                  <Card
+                    sx={{
+                      height: '100%',
+                      border: '1px solid #e5e7eb',
+                      '&:hover': { boxShadow: 3 },
+                    }}
+                  >
+                    <CardContent>
+                      <Stack spacing={2}>
+                        {/* Header */}
+                        <Stack direction="row" justifyContent="space-between" alignItems="flex-start">
+                          <Typography variant="h6" fontWeight={700} sx={{ color: '#1f2937', flex: 1 }}>
+                            {permission.title}
                         </Typography>
                         <Chip
                           label={getStatusLabel(permission.status)}

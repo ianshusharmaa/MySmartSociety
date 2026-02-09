@@ -20,6 +20,7 @@ import LaunchIcon from '@mui/icons-material/Launch';
 import { Chart as ChartJS, ArcElement, CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend } from 'chart.js';
 import { Doughnut, Bar } from 'react-chartjs-2';
 import { getComplaintStats, getPermissionStats, getMaintenanceStats, getEvents, getAllUsers } from '../../services/api';
+import './Dashboard.css';
 
 ChartJS.register(ArcElement, CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend);
 
@@ -64,11 +65,11 @@ const AdminDashboard = () => {
 
   if (loading) {
     return (
-      <Box sx={{ display: 'flex', justifyContent: 'center', py: 6 }}>
+      <div className="loading-container">
         <Typography variant="body2" color="text.secondary">
           Loading dashboard...
         </Typography>
-      </Box>
+      </div>
     );
   }
 
@@ -157,7 +158,7 @@ const AdminDashboard = () => {
       value: stats.complaints.total,
       helper: `${stats.complaints.pending} pending`,
       icon: <ReportProblemIcon />,
-      color: 'error.main',
+      colorClass: 'error',
       onClick: () => navigate('/admin/complaints'),
     },
     {
@@ -165,7 +166,7 @@ const AdminDashboard = () => {
       value: stats.permissions.total,
       helper: `${stats.permissions.pending} pending`,
       icon: <KeyIcon />,
-      color: 'warning.main',
+      colorClass: 'warning',
       onClick: () => navigate('/admin/permissions'),
     },
     {
@@ -173,7 +174,7 @@ const AdminDashboard = () => {
       value: `₹${stats.maintenance.collectedAmount.toLocaleString()}`,
       helper: `${stats.maintenance.paid} paid`,
       icon: <PaymentsIcon />,
-      color: 'success.main',
+      colorClass: 'success',
       onClick: () => navigate('/admin/maintenance'),
     },
     {
@@ -181,85 +182,51 @@ const AdminDashboard = () => {
       value: stats.maintenance.pending,
       helper: 'Residents to follow up',
       icon: <PeopleAltIcon />,
-      color: 'info.main',
+      colorClass: 'info',
       onClick: () => navigate('/admin/maintenance'),
     },
   ];
 
   return (
-    <Box>
-      <Stack spacing={0.5} sx={{ mb: 3 }}>
-        <Typography variant="h4" fontWeight={700}>
-          Admin Dashboard
-        </Typography>
-        <Typography variant="body2" color="text.secondary">
-          Society management overview
-        </Typography>
-      </Stack>
+    <div className="dashboard-container">
+      <div className="dashboard-header">
+        <h1 className="dashboard-title">Admin Dashboard</h1>
+        <p className="dashboard-subtitle">Society management overview</p>
+      </div>
 
-      <Grid container spacing={2} sx={{ mb: 2 }}>
+      <Grid container spacing={2} className="stats-grid">
         {statCards.map((card) => (
           <Grid item xs={12} sm={6} lg={3} key={card.title}>
-            <Card
-              onClick={card.onClick}
-              sx={{
-                cursor: 'pointer',
-                height: '100%',
-                transition: 'transform 0.2s ease, box-shadow 0.2s ease',
-                '&:hover': { transform: 'translateY(-4px)', boxShadow: 6 },
-              }}
-            >
-              <CardContent>
-                <Stack direction="row" alignItems="center" spacing={2}>
-                  <Box
-                    sx={{
-                      width: 46,
-                      height: 46,
-                      borderRadius: '14px',
-                      display: 'flex',
-                      alignItems: 'center',
-                      justifyContent: 'center',
-                      bgcolor: card.color,
-                      color: '#fff',
-                      fontSize: 22,
-                    }}
-                  >
+            <div className="stat-card" onClick={card.onClick}>
+              <div className="stat-card-content">
+                <div className="stat-icon-row">
+                  <div className={`stat-icon ${card.colorClass}`}>
                     {card.icon}
-                  </Box>
-                  <Box>
-                    <Typography variant="caption" color="text.secondary">
-                      {card.title}
-                    </Typography>
-                    <Typography variant="h6" fontWeight={700}>
-                      {card.value}
-                    </Typography>
-                  </Box>
-                </Stack>
-                <Stack direction="row" spacing={1} alignItems="center" sx={{ mt: 2 }}>
-                  <ScheduleIcon sx={{ fontSize: 16, color: 'text.secondary' }} />
-                  <Typography variant="caption" color="text.secondary">
-                    {card.helper}
-                  </Typography>
-                </Stack>
-              </CardContent>
-            </Card>
+                  </div>
+                  <div className="stat-details">
+                    <p className="stat-label">{card.title}</p>
+                    <h3 className="stat-value">{card.value}</h3>
+                  </div>
+                </div>
+                <div className="stat-helper-row">
+                  <ScheduleIcon className="stat-helper-icon" />
+                  <span className="stat-helper-text">{card.helper}</span>
+                </div>
+              </div>
+            </div>
           </Grid>
         ))}
       </Grid>
 
-      <Grid container spacing={2}>
+      <Grid container spacing={2} className="main-grid">
         <Grid item xs={12} lg={6}>
-          <Card sx={{ height: '100%' }}>
-            <CardContent>
-              <Stack direction="row" justifyContent="space-between" alignItems="flex-start" spacing={2}>
-                <Box>
-                  <Typography variant="overline" color="text.secondary">
-                    Complaints & Permissions
-                  </Typography>
-                  <Typography variant="h6" fontWeight={700}>
-                    Operational queue
-                  </Typography>
-                </Box>
+          <div className="section-card">
+            <div className="section-card-content">
+              <div className="section-header">
+                <div className="section-info">
+                  <p className="section-overline">Complaints & Permissions</p>
+                  <h3 className="section-title">Operational queue</h3>
+                </div>
                 <Button
                   size="small"
                   endIcon={<LaunchIcon />}
@@ -267,50 +234,38 @@ const AdminDashboard = () => {
                 >
                   View details
                 </Button>
-              </Stack>
+              </div>
 
-              <Stack spacing={2} sx={{ mt: 3 }}>
-                <Stack direction="row" justifyContent="space-between" alignItems="center">
-                  <Typography variant="body2" color="text.secondary">
-                    Complaints pending
-                  </Typography>
+              <div className="section-list">
+                <div className="section-list-item">
+                  <span className="section-list-label">Complaints pending</span>
                   <Chip size="small" label={stats.complaints.pending} color="warning" />
-                </Stack>
-                <Stack direction="row" justifyContent="space-between" alignItems="center">
-                  <Typography variant="body2" color="text.secondary">
-                    Complaints resolved
-                  </Typography>
+                </div>
+                <div className="section-list-item">
+                  <span className="section-list-label">Complaints resolved</span>
                   <Chip size="small" label={stats.complaints.resolved} color="success" />
-                </Stack>
-                <Stack direction="row" justifyContent="space-between" alignItems="center">
-                  <Typography variant="body2" color="text.secondary">
-                    Permissions pending
-                  </Typography>
+                </div>
+                <div className="section-list-item">
+                  <span className="section-list-label">Permissions pending</span>
                   <Chip size="small" label={stats.permissions.pending} color="warning" />
-                </Stack>
-                <Stack direction="row" justifyContent="space-between" alignItems="center">
-                  <Typography variant="body2" color="text.secondary">
-                    Permissions approved
-                  </Typography>
+                </div>
+                <div className="section-list-item">
+                  <span className="section-list-label">Permissions approved</span>
                   <Chip size="small" label={stats.permissions.approved} color="success" />
-                </Stack>
-              </Stack>
-            </CardContent>
-          </Card>
+                </div>
+              </div>
+            </div>
+          </div>
         </Grid>
 
         <Grid item xs={12} lg={6}>
-          <Card sx={{ height: '100%' }}>
-            <CardContent>
-              <Stack direction="row" justifyContent="space-between" alignItems="flex-start" spacing={2}>
-                <Box>
-                  <Typography variant="overline" color="text.secondary">
-                    Maintenance & Collections
-                  </Typography>
-                  <Typography variant="h6" fontWeight={700}>
-                    Cashflow snapshot
-                  </Typography>
-                </Box>
+          <div className="section-card">
+            <div className="section-card-content">
+              <div className="section-header">
+                <div className="section-info">
+                  <p className="section-overline">Maintenance & Collections</p>
+                  <h3 className="section-title">Cashflow snapshot</h3>
+                </div>
                 <Button
                   size="small"
                   endIcon={<LaunchIcon />}
@@ -318,168 +273,150 @@ const AdminDashboard = () => {
                 >
                   Go to payments
                 </Button>
-              </Stack>
+              </div>
 
-              <Stack spacing={2} sx={{ mt: 3 }}>
-                <Stack direction="row" justifyContent="space-between" alignItems="center">
-                  <Typography variant="body2" color="text.secondary">
-                    Collected
-                  </Typography>
-                  <Typography variant="body2" fontWeight={700}>
+              <div className="section-list">
+                <div className="section-list-item">
+                  <span className="section-list-label">Collected</span>
+                  <span className="section-list-value">
                     ₹{stats.maintenance.collectedAmount.toLocaleString()}
-                  </Typography>
-                </Stack>
-                <Stack direction="row" justifyContent="space-between" alignItems="center">
-                  <Typography variant="body2" color="text.secondary">
-                    Paid residents
-                  </Typography>
-                  <Stack direction="row" spacing={1} alignItems="center">
-                    <CheckCircleIcon sx={{ fontSize: 16, color: 'success.main' }} />
-                    <Typography variant="body2" fontWeight={700}>
-                      {stats.maintenance.paid}
-                    </Typography>
-                  </Stack>
-                </Stack>
-                <Stack direction="row" justifyContent="space-between" alignItems="center">
-                  <Typography variant="body2" color="text.secondary">
-                    Pending residents
-                  </Typography>
-                  <Stack direction="row" spacing={1} alignItems="center">
-                    <ScheduleIcon sx={{ fontSize: 16, color: 'warning.main' }} />
-                    <Typography variant="body2" fontWeight={700}>
-                      {stats.maintenance.pending}
-                    </Typography>
-                  </Stack>
-                </Stack>
-              </Stack>
+                  </span>
+                </div>
+                <div className="section-list-item">
+                  <span className="section-list-label">Paid residents</span>
+                  <div className="section-list-icon-value">
+                    <CheckCircleIcon className="section-list-icon success" />
+                    <span className="section-list-value">{stats.maintenance.paid}</span>
+                  </div>
+                </div>
+                <div className="section-list-item">
+                  <span className="section-list-label">Pending residents</span>
+                  <div className="section-list-icon-value">
+                    <ScheduleIcon className="section-list-icon warning" />
+                    <span className="section-list-value">{stats.maintenance.pending}</span>
+                  </div>
+                </div>
+              </div>
 
-              <Stack direction="row" spacing={2} sx={{ mt: 3 }}>
+              <div className="action-buttons">
                 <Button variant="contained" onClick={() => navigate('/admin/notices')}>
                   Send notice
                 </Button>
                 <Button variant="outlined" onClick={() => navigate('/admin/events')}>
                   Create fundraiser
                 </Button>
-              </Stack>
-            </CardContent>
-          </Card>
+              </div>
+            </div>
+          </div>
         </Grid>
       </Grid>
 
-      <Grid container spacing={4} sx={{ mt: 2 }}>
+      <Grid container spacing={2} className="chart-grid">
         <Grid item xs={12} lg={6}>
-          <Card sx={{ height: '100%', minHeight: 420 }}>
-            <CardContent>
-              <Typography variant="h6" fontWeight={700} gutterBottom>
-                Complaints Status
-              </Typography>
-              <Box sx={{ height: 220, display: 'flex', justifyContent: 'center', alignItems: 'center', mb: 2 }}>
+          <div className="chart-card">
+            <div className="chart-card-content">
+              <h3 className="chart-title">Complaints Status</h3>
+              <div className="chart-container">
                 <Doughnut data={complaintsChartData} options={chartOptions} />
-              </Box>
-              <Stack spacing={1} sx={{ pt: 1, borderTop: '1px solid #e5e7eb' }}>
-                <Stack direction="row" justifyContent="space-between">
-                  <Typography variant="caption" color="text.secondary">Total Complaints:</Typography>
+              </div>
+              <div className="chart-stats">
+                <div className="chart-stat-row">
+                  <span className="chart-stat-label">Total Complaints:</span>
                   <Chip size="small" label={stats.complaints.total} color="primary" />
-                </Stack>
-                <Stack direction="row" justifyContent="space-between">
-                  <Typography variant="caption" color="text.secondary">Pending:</Typography>
-                  <Chip size="small" label={stats.complaints.pending} sx={{ bgcolor: '#f59e0b', color: 'white' }} />
-                </Stack>
-                <Stack direction="row" justifyContent="space-between">
-                  <Typography variant="caption" color="text.secondary">Resolved:</Typography>
-                  <Chip size="small" label={stats.complaints.resolved} sx={{ bgcolor: '#10b981', color: 'white' }} />
-                </Stack>
-              </Stack>
-            </CardContent>
-          </Card>
+                </div>
+                <div className="chart-stat-row">
+                  <span className="chart-stat-label">Pending:</span>
+                  <Chip size="small" label={stats.complaints.pending} className="chip-warning" />
+                </div>
+                <div className="chart-stat-row">
+                  <span className="chart-stat-label">Resolved:</span>
+                  <Chip size="small" label={stats.complaints.resolved} className="chip-success" />
+                </div>
+              </div>
+            </div>
+          </div>
         </Grid>
 
         <Grid item xs={12} lg={6}>
-          <Card sx={{ height: '100%', minHeight: 420 }}>
-            <CardContent>
-              <Typography variant="h6" fontWeight={700} gutterBottom>
-                Permissions Overview
-              </Typography>
-              <Box sx={{ height: 220, display: 'flex', justifyContent: 'center', alignItems: 'center', mb: 2 }}>
+          <div className="chart-card">
+            <div className="chart-card-content">
+              <h3 className="chart-title">Permissions Overview</h3>
+              <div className="chart-container">
                 <Doughnut data={permissionsChartData} options={chartOptions} />
-              </Box>
-              <Stack spacing={1} sx={{ pt: 1, borderTop: '1px solid #e5e7eb' }}>
-                <Stack direction="row" justifyContent="space-between">
-                  <Typography variant="caption" color="text.secondary">Total Permissions:</Typography>
+              </div>
+              <div className="chart-stats">
+                <div className="chart-stat-row">
+                  <span className="chart-stat-label">Total Permissions:</span>
                   <Chip size="small" label={stats.permissions.total} color="primary" />
-                </Stack>
-                <Stack direction="row" justifyContent="space-between">
-                  <Typography variant="caption" color="text.secondary">Pending:</Typography>
-                  <Chip size="small" label={stats.permissions.pending} sx={{ bgcolor: '#f59e0b', color: 'white' }} />
-                </Stack>
-                <Stack direction="row" justifyContent="space-between">
-                  <Typography variant="caption" color="text.secondary">Approved:</Typography>
-                  <Chip size="small" label={stats.permissions.approved} sx={{ bgcolor: '#10b981', color: 'white' }} />
-                </Stack>
-                <Stack direction="row" justifyContent="space-between">
-                  <Typography variant="caption" color="text.secondary">Rejected:</Typography>
-                  <Chip size="small" label={stats.permissions.rejected || 0} sx={{ bgcolor: '#ef4444', color: 'white' }} />
-                </Stack>
-              </Stack>
-            </CardContent>
-          </Card>
+                </div>
+                <div className="chart-stat-row">
+                  <span className="chart-stat-label">Pending:</span>
+                  <Chip size="small" label={stats.permissions.pending} className="chip-warning" />
+                </div>
+                <div className="chart-stat-row">
+                  <span className="chart-stat-label">Approved:</span>
+                  <Chip size="small" label={stats.permissions.approved} className="chip-success" />
+                </div>
+                <div className="chart-stat-row">
+                  <span className="chart-stat-label">Rejected:</span>
+                  <Chip size="small" label={stats.permissions.rejected || 0} className="chip-error" />
+                </div>
+              </div>
+            </div>
+          </div>
         </Grid>
 
         <Grid item xs={12} lg={6}>
-          <Card sx={{ height: '100%', minHeight: 420 }}>
-            <CardContent>
-              <Typography variant="h6" fontWeight={700} gutterBottom>
-                User Activity
-              </Typography>
-              <Box sx={{ height: 220, display: 'flex', justifyContent: 'center', alignItems: 'center', mb: 2 }}>
+          <div className="chart-card">
+            <div className="chart-card-content">
+              <h3 className="chart-title">User Activity</h3>
+              <div className="chart-container">
                 <Doughnut data={usersChartData} options={chartOptions} />
-              </Box>
-              <Stack spacing={1} sx={{ pt: 1, borderTop: '1px solid #e5e7eb' }}>
-                <Stack direction="row" justifyContent="space-between">
-                  <Typography variant="caption" color="text.secondary">Total Users:</Typography>
+              </div>
+              <div className="chart-stats">
+                <div className="chart-stat-row">
+                  <span className="chart-stat-label">Total Users:</span>
                   <Chip size="small" label={users.length} color="primary" />
-                </Stack>
-                <Stack direction="row" justifyContent="space-between">
-                  <Typography variant="caption" color="text.secondary">Active Users:</Typography>
-                  <Chip size="small" label={activeUsers} sx={{ bgcolor: '#10b981', color: 'white' }} />
-                </Stack>
-                <Stack direction="row" justifyContent="space-between">
-                  <Typography variant="caption" color="text.secondary">Inactive Users:</Typography>
-                  <Chip size="small" label={inactiveUsers} sx={{ bgcolor: '#ef4444', color: 'white' }} />
-                </Stack>
-              </Stack>
-            </CardContent>
-          </Card>
+                </div>
+                <div className="chart-stat-row">
+                  <span className="chart-stat-label">Active Users:</span>
+                  <Chip size="small" label={activeUsers} className="chip-success" />
+                </div>
+                <div className="chart-stat-row">
+                  <span className="chart-stat-label">Inactive Users:</span>
+                  <Chip size="small" label={inactiveUsers} className="chip-error" />
+                </div>
+              </div>
+            </div>
+          </div>
         </Grid>
 
         <Grid item xs={12} lg={6}>
-          <Card sx={{ height: '100%', minHeight: 420 }}>
-            <CardContent>
-              <Typography variant="h6" fontWeight={700} gutterBottom>
-                Events Fundraiser Progress
-              </Typography>
-              <Box sx={{ height: 220, mb: 2 }}>
+          <div className="chart-card">
+            <div className="chart-card-content">
+              <h3 className="chart-title">Events Fundraiser Progress</h3>
+              <div className="chart-container">
                 <Bar data={eventsBarData} options={barChartOptions} />
-              </Box>
-              <Stack spacing={1} sx={{ pt: 1, borderTop: '1px solid #e5e7eb' }}>
-                <Stack direction="row" justifyContent="space-between">
-                  <Typography variant="caption" color="text.secondary">Total Events:</Typography>
+              </div>
+              <div className="chart-stats">
+                <div className="chart-stat-row">
+                  <span className="chart-stat-label">Total Events:</span>
                   <Chip size="small" label={events.length} color="primary" />
-                </Stack>
-                <Stack direction="row" justifyContent="space-between">
-                  <Typography variant="caption" color="text.secondary">Total Collected:</Typography>
-                  <Typography variant="caption" fontWeight={700}>₹{events.reduce((sum, e) => sum + (e.collectedAmount || 0), 0).toLocaleString()}</Typography>
-                </Stack>
-                <Stack direction="row" justifyContent="space-between">
-                  <Typography variant="caption" color="text.secondary">Total Target:</Typography>
-                  <Typography variant="caption" fontWeight={700}>₹{events.reduce((sum, e) => sum + (e.targetAmount || 0), 0).toLocaleString()}</Typography>
-                </Stack>
-              </Stack>
-            </CardContent>
-          </Card>
+                </div>
+                <div className="chart-stat-row">
+                  <span className="chart-stat-label">Total Collected:</span>
+                  <span className="chart-stat-value">₹{events.reduce((sum, e) => sum + (e.collectedAmount || 0), 0).toLocaleString()}</span>
+                </div>
+                <div className="chart-stat-row">
+                  <span className="chart-stat-label">Total Target:</span>
+                  <span className="chart-stat-value">₹{events.reduce((sum, e) => sum + (e.targetAmount || 0), 0).toLocaleString()}</span>
+                </div>
+              </div>
+            </div>
+          </div>
         </Grid>
       </Grid>
-    </Box>
+    </div>
   );
 };
 

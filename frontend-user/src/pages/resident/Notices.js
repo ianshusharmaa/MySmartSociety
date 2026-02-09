@@ -10,6 +10,10 @@ import {
   Grid,
   Stack,
   Typography,
+  FormControl,
+  InputLabel,
+  MenuItem,
+  Select,
 } from '@mui/material';
 import NotificationsIcon from '@mui/icons-material/Notifications';
 import WarningIcon from '@mui/icons-material/Warning';
@@ -18,6 +22,7 @@ import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
 const Notices = () => {
   const [notices, setNotices] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [filterPriority, setFilterPriority] = useState('all');
 
   useEffect(() => {
     fetchNotices();
@@ -71,6 +76,85 @@ const Notices = () => {
           Society Notices & Announcements
         </Typography>
 
+        {/* Statistics Cards */}
+        {notices.length > 0 && (
+          <Grid container spacing={3}>
+            <Grid item xs={12} sm={6} md={3}>
+              <Card sx={{ bgcolor: 'rgba(139, 92, 246, 0.1)', border: '1px solid #e5e7eb' }}>
+                <CardContent>
+                  <Typography variant="body2" sx={{ color: '#6b7280', mb: 1 }}>
+                    Total Notices
+                  </Typography>
+                  <Typography variant="h5" fontWeight={800} sx={{ color: '#8b5cf6' }}>
+                    {notices.length}
+                  </Typography>
+                </CardContent>
+              </Card>
+            </Grid>
+            <Grid item xs={12} sm={6} md={3}>
+              <Card sx={{ bgcolor: 'rgba(239, 68, 68, 0.1)', border: '1px solid #e5e7eb' }}>
+                <CardContent>
+                  <Typography variant="body2" sx={{ color: '#6b7280', mb: 1 }}>
+                    High Priority
+                  </Typography>
+                  <Typography variant="h5" fontWeight={800} sx={{ color: '#ef4444' }}>
+                    {notices.filter(n => n.priority === 'high').length}
+                  </Typography>
+                </CardContent>
+              </Card>
+            </Grid>
+            <Grid item xs={12} sm={6} md={3}>
+              <Card sx={{ bgcolor: 'rgba(245, 158, 11, 0.1)', border: '1px solid #e5e7eb' }}>
+                <CardContent>
+                  <Typography variant="body2" sx={{ color: '#6b7280', mb: 1 }}>
+                    Medium Priority
+                  </Typography>
+                  <Typography variant="h5" fontWeight={800} sx={{ color: '#f59e0b' }}>
+                    {notices.filter(n => n.priority === 'medium').length}
+                  </Typography>
+                </CardContent>
+              </Card>
+            </Grid>
+            <Grid item xs={12} sm={6} md={3}>
+              <Card sx={{ bgcolor: 'rgba(59, 130, 246, 0.1)', border: '1px solid #e5e7eb' }}>
+                <CardContent>
+                  <Typography variant="body2" sx={{ color: '#6b7280', mb: 1 }}>
+                    Low Priority
+                  </Typography>
+                  <Typography variant="h5" fontWeight={800} sx={{ color: '#3b82f6' }}>
+                    {notices.filter(n => n.priority === 'low').length}
+                  </Typography>
+                </CardContent>
+              </Card>
+            </Grid>
+          </Grid>
+        )}
+
+        {/* Filter Section */}
+        {notices.length > 0 && (
+          <Card sx={{ bgcolor: '#f9fafb', border: '1px solid #e5e7eb' }}>
+            <CardContent>
+              <Typography variant="subtitle2" fontWeight={700} sx={{ mb: 2, color: '#1f2937' }}>
+                FILTER
+              </Typography>
+              <FormControl sx={{ minWidth: 200 }}>
+                <InputLabel>Priority</InputLabel>
+                <Select
+                  value={filterPriority}
+                  label="Priority"
+                  onChange={(e) => setFilterPriority(e.target.value)}
+                  size="small"
+                >
+                  <MenuItem value="all">All Priorities</MenuItem>
+                  <MenuItem value="low">Low</MenuItem>
+                  <MenuItem value="medium">Medium</MenuItem>
+                  <MenuItem value="high">High</MenuItem>
+                </Select>
+              </FormControl>
+            </CardContent>
+          </Card>
+        )}
+
         {/* Notices List */}
         {notices.length === 0 ? (
           <Card sx={{ bgcolor: '#f0f2f5', border: '1px solid #e5e7eb' }}>
@@ -83,36 +167,41 @@ const Notices = () => {
           </Card>
         ) : (
           <Grid container spacing={3}>
-            {notices.map((notice) => (
-              <Grid item xs={12} key={notice._id}>
-                <Card
-                  sx={{
-                    border: `2px solid ${getPriorityColor(notice.priority)}`,
-                    '&:hover': { boxShadow: 3 },
-                  }}
-                >
-                  <CardContent>
-                    <Stack spacing={2}>
-                      {/* Header */}
-                      <Stack direction="row" justifyContent="space-between" alignItems="flex-start" spacing={2}>
-                        <Stack direction="row" spacing={2} alignItems="flex-start" sx={{ flex: 1 }}>
-                          <Box sx={{ pt: 0.5 }}>{getCategoryIcon(notice.category)}</Box>
-                          <Box sx={{ flex: 1 }}>
-                            <Typography variant="h6" fontWeight={800} sx={{ color: '#1f2937' }}>
-                              {notice.title}
-                            </Typography>
-                          </Box>
-                        </Stack>
-                        <Stack direction="row" spacing={1}>
-                          <Chip
-                            label={getPriorityLabel(notice.priority)}
-                            sx={{
-                              bgcolor: getPriorityColor(notice.priority),
-                              color: 'white',
-                              fontWeight: 700,
-                              fontSize: 12,
-                            }}
-                          />
+            {notices
+              .filter((notice) => {
+                if (filterPriority !== 'all' && notice.priority !== filterPriority) return false;
+                return true;
+              })
+              .map((notice) => (
+                <Grid item xs={12} key={notice._id}>
+                  <Card
+                    sx={{
+                      border: `2px solid ${getPriorityColor(notice.priority)}`,
+                      '&:hover': { boxShadow: 3 },
+                    }}
+                  >
+                    <CardContent>
+                      <Stack spacing={2}>
+                        {/* Header */}
+                        <Stack direction="row" justifyContent="space-between" alignItems="flex-start" spacing={2}>
+                          <Stack direction="row" spacing={2} alignItems="flex-start" sx={{ flex: 1 }}>
+                            <Box sx={{ pt: 0.5 }}>{getCategoryIcon(notice.category)}</Box>
+                            <Box sx={{ flex: 1 }}>
+                              <Typography variant="h6" fontWeight={800} sx={{ color: '#1f2937' }}>
+                                {notice.title}
+                              </Typography>
+                            </Box>
+                          </Stack>
+                          <Stack direction="row" spacing={1}>
+                            <Chip
+                              label={getPriorityLabel(notice.priority)}
+                              sx={{
+                                bgcolor: getPriorityColor(notice.priority),
+                                color: 'white',
+                                fontWeight: 700,
+                                fontSize: 12,
+                              }}
+                            />
                           <Chip
                             label={notice.category}
                             sx={{

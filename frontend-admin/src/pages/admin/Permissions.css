@@ -15,7 +15,7 @@
   color: #1a1a2e;
   font-weight: 700;
   margin: 0;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background: linear-gradient(135deg, #1a73e8 0%, #1557c0 100%);
   background-clip: text;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
@@ -30,32 +30,34 @@
 }
 
 .stat-card {
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background: linear-gradient(135deg, #1e3a8a 0%, #2563eb 100%);
   color: white;
   padding: 25px;
   border-radius: 16px;
-  box-shadow: 0 10px 30px rgba(102, 126, 234, 0.2);
+  box-shadow: 0 10px 30px rgba(37, 99, 235, 0.22);
   transition: all 0.3s ease;
 }
 
 .stat-card:hover {
   transform: translateY(-5px);
-  box-shadow: 0 15px 40px rgba(102, 126, 234, 0.3);
+  box-shadow: 0 15px 40px rgba(37, 99, 235, 0.35);
 }
 
 .stat-card.warning {
-  background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
-  box-shadow: 0 10px 30px rgba(245, 87, 108, 0.2);
+  background: linear-gradient(135deg, #1d4ed8 0%, #3b82f6 100%);
+  box-shadow: 0 10px 30px rgba(59, 130, 246, 0.22);
 }
 
 .stat-card.success {
-  background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
-  box-shadow: 0 10px 30px rgba(79, 172, 254, 0.2);
+  background: linear-gradient(135deg, #5eb3f6 0%, #93c5fd 100%);
+  color: #0c4a6e;
+  box-shadow: 0 10px 30px rgba(148, 163, 254, 0.22);
 }
 
 .stat-card.danger {
-  background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);
-  box-shadow: 0 10px 30px rgba(250, 112, 154, 0.2);
+  background: linear-gradient(135deg, #60a5fa 0%, #93c5fd 100%);
+  color: #0c4a6e;
+  box-shadow: 0 10px 30px rgba(147, 197, 253, 0.22);
 }
 
 .stat-card h3 {
@@ -94,16 +96,16 @@
 }
 
 .filter-btn:hover {
-  border-color: #667eea;
-  color: #667eea;
+  border-color: #1e3a8a;
+  color: #1e3a8a;
   transform: translateY(-2px);
 }
 
 .filter-btn.active {
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background: linear-gradient(135deg, #1e3a8a 0%, #2563eb 100%);
   color: white;
   border-color: transparent;
-  box-shadow: 0 5px 15px rgba(102, 126, 234, 0.3);
+  box-shadow: 0 5px 15px rgba(37, 99, 235, 0.3);
 }
 
 /* Complaints Grid (used for permissions) */
@@ -114,10 +116,36 @@
 }
 
 .complaint-card {
-  background: white;
+  background: #ffffff;
   border-radius: 16px;
   padding: 28px;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+  border: 1px solid rgba(26, 115, 232, 0.15);
+  transition: all 0.3s ease;
+}
+
+.complaint-card:hover {
+  box-shadow: 0 12px 35px rgba(26, 115, 232, 0.16);
+  transform: translateY(-2px);
+}
+
+.complaint-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 20px;
+  padding-bottom: 16px;
+  border-bottom: 2px solid #e0e7ff;
+}
+
+.complaint-header h3 {
+  font-size: 1.1rem;
+  font-weight: 600;
+  margin: 0;
+  color: #0c2d54;
+}
+
+.complaint-card {
   border: 1px solid #f0f0f0;
   transition: all 0.3s ease;
   position: relative;
@@ -158,6 +186,20 @@
 
 /* Permission Info */
 .permission-info {
+  background: linear-gradient(135deg, #dbeafe 0%, #f0f8ff 100%);
+  padding: 16px;
+  border-radius: 12px;
+  margin-bottom: 16px;
+  border-left: 4px solid #1e3a8a;
+}
+
+.permission-info p {
+  margin: 6px 0;
+  color: #0c4a6e;
+  font-size: 0.9rem;
+}
+
+.permission-card-content {
   background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
   padding: 16px;
   border-radius: 12px;

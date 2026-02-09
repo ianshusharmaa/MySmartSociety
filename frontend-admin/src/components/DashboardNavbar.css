@@ -1,0 +1,92 @@
+.dashboard-navbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  background-color: rgba(255, 255, 255, 0.9);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid #e5e7eb;
+  box-shadow: none;
+  z-index: 1100;
+}
+
+.dashboard-navbar-toolbar {
+  min-height: 64px;
+  padding: 0 16px;
+  display: flex;
+  align-items: center;
+}
+
+@media (min-width: 960px) {
+  .dashboard-navbar-toolbar {
+    min-height: 72px;
+  }
+}
+
+.dashboard-navbar-menu-btn {
+  margin-right: 8px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 8px;
+  border-radius: 4px;
+  color: inherit;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.dashboard-navbar-menu-btn:hover {
+  background-color: rgba(0, 0, 0, 0.04);
+}
+
+.dashboard-navbar-title {
+  flex-grow: 1;
+  font-size: 1.25rem;
+  font-weight: 700;
+  margin: 0;
+}
+
+.dashboard-navbar-desktop {
+  display: none;
+}
+
+@media (min-width: 600px) {
+  .dashboard-navbar-desktop {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+}
+
+.dashboard-navbar-username {
+  font-size: 0.875rem;
+  font-weight: 600;
+  margin: 0;
+}
+
+.dashboard-navbar-mobile {
+  display: block;
+}
+
+@media (min-width: 600px) {
+  .dashboard-navbar-mobile {
+    display: none;
+  }
+}
+
+.dashboard-navbar-logout-icon-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 8px;
+  border-radius: 4px;
+  color: inherit;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.dashboard-navbar-logout-icon-btn:hover {
+  background-color: rgba(0, 0, 0, 0.04);
+}

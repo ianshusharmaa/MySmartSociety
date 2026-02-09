@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { getNotices, createNotice, updateNotice, deleteNotice } from '../../services/api';
 import { FaBullhorn, FaPlus, FaEdit, FaTrash, FaTimes } from 'react-icons/fa';
 import { showToast, showConfirm } from '../../utils/notifications';
-import './Permissions.css';
+import './Notices.css';
 
 const AdminNotices = () => {
   const [notices, setNotices] = useState([]);
@@ -138,11 +138,11 @@ const AdminNotices = () => {
           {notices.map((notice) => (
             <div key={notice._id} className={`complaint-card notice-${notice.priority}`}>
               <div className="complaint-header">
-                <div style={{ display: 'flex', alignItems: 'center', gap: '12px', flex: 1 }}>
-                  <span style={{ fontSize: '24px', color: '#667eea' }}><FaBullhorn /></span>
+                <div className="notice-header-meta">
+                  <span className="notice-header-icon"><FaBullhorn /></span>
                   <h3>{notice.title}</h3>
                 </div>
-                <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap' }}>
+                <div className="notice-header-badges">
                   <span className={getPriorityBadge(notice.priority)}>
                     {notice.priority}
                   </span>
@@ -152,11 +152,11 @@ const AdminNotices = () => {
 
               <p className="complaint-description">{notice.content}</p>
 
-              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '12px', marginTop: '16px', paddingTop: '16px', borderTop: '1px solid #f0f0f0' }}>
-                <div style={{ display: 'flex', flexDirection: 'column', gap: '4px', fontSize: '13px', color: '#718096' }}>
+              <div className="notice-footer">
+                <div className="notice-footer-meta">
                   <span>Posted: {new Date(notice.createdAt).toLocaleDateString('en-GB')}</span>
                   {notice.expiryDate && (
-                    <span style={{ color: '#ff9800', fontWeight: 500 }}>
+                    <span className="notice-expiry">
                       Expires: {new Date(notice.expiryDate).toLocaleDateString('en-GB')}
                     </span>
                   )}
@@ -216,7 +216,7 @@ const AdminNotices = () => {
                 />
               </div>
 
-              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '20px' }}>
+              <div className="notice-form-grid">
                 <div className="form-group">
                   <label>Category</label>
                   <select

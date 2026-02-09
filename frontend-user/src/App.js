@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-d
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { AuthProvider } from './context/AuthContext';
+import { ThemeProvider as CustomThemeProvider } from './context/ThemeContext';
 import { CssBaseline, ThemeProvider } from '@mui/material';
 import theme from './assets/theme';
 
@@ -16,6 +17,7 @@ import Maintenance from './pages/resident/Maintenance';
 import Events from './pages/resident/Events';
 import Notices from './pages/resident/Notices';
 import Profile from './pages/Profile';
+import Settings from './pages/resident/Settings';
 
 // Components
 import PrivateRoute from './components/PrivateRoute';
@@ -24,10 +26,11 @@ import ResidentLayout from './layout/ResidentLayout';
 function App() {
   return (
     <AuthProvider>
-      <ThemeProvider theme={theme}>
-        <CssBaseline />
-        <Router>
-          <div className="App">
+      <CustomThemeProvider>
+        <ThemeProvider theme={theme}>
+          <CssBaseline />
+          <Router>
+            <div className="App">
             <Routes>
               {/* Public Routes */}
               <Route path="/login" element={<Login />} />
@@ -41,6 +44,7 @@ function App() {
               <Route path="/events" element={<PrivateRoute><ResidentLayout><Events /></ResidentLayout></PrivateRoute>} />
               <Route path="/notices" element={<PrivateRoute><ResidentLayout><Notices /></ResidentLayout></PrivateRoute>} />
               <Route path="/profile" element={<PrivateRoute><ResidentLayout><Profile /></ResidentLayout></PrivateRoute>} />
+              <Route path="/settings" element={<PrivateRoute><ResidentLayout><Settings /></ResidentLayout></PrivateRoute>} />
 
               {/* Default Route */}
               <Route path="/" element={<Navigate to="/welcome" replace />} />
@@ -49,6 +53,7 @@ function App() {
           </div>
         </Router>
       </ThemeProvider>
+      </CustomThemeProvider>
     </AuthProvider>
   );
 }

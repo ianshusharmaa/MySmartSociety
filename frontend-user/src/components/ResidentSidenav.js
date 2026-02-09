@@ -71,31 +71,19 @@ const ResidentSidenav = ({ mobileOpen, onClose }) => {
   );
 
   return (
-    <Box component="nav" sx={{ width: { md: drawerWidth }, flexShrink: { md: 0 } }}>
+    <nav>
       <Drawer
         variant="temporary"
         open={mobileOpen}
         onClose={onClose}
         ModalProps={{ keepMounted: true }}
         sx={{
-          display: { xs: 'block', md: 'none' },
           '& .MuiDrawer-paper': { width: drawerWidth, boxSizing: 'border-box' },
         }}
       >
         {drawerContent}
       </Drawer>
-      <Drawer
-        variant="temporary"
-        open={mobileOpen}
-        onClose={onClose}
-        sx={{
-          display: { xs: 'none', md: 'block' },
-          '& .MuiDrawer-paper': { width: drawerWidth, boxSizing: 'border-box' },
-        }}
-      >
-        {drawerContent}
-      </Drawer>
-    </Box>
+    </nav>
   );
 };
 

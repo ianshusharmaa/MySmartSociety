@@ -55,28 +55,30 @@
 
 .complaint-header h3 {
   font-size: 20px;
-  color: var(--text-dark);
+  color: #0c2d54;
   flex: 1;
 }
 
 .complaint-category {
-  color: var(--text-light);
+  color: #0c4a6e;
   font-size: 14px;
   margin-bottom: 10px;
 }
 
 .complaint-description {
-  color: var(--text-dark);
+  color: #1a2332;
   line-height: 1.6;
   margin-bottom: 15px;
 }
 
 .complaint-remarks {
-  background: var(--bg-light);
+  background: linear-gradient(135deg, #dbeafe 0%, #f0f8ff 100%);
+  border-left: 4px solid #1e3a8a;
   padding: 12px;
   border-radius: 6px;
   margin-bottom: 15px;
   font-size: 14px;
+  color: #0c4a6e;
 }
 
 .complaint-date {

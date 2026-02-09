@@ -7,9 +7,17 @@
 }
 
 :root {
-  --primary-color: #6366f1;
-  --primary-dark: #4f46e5;
-  --primary-light: #e0e7ff;
+  --primary-color: #1a73e8;
+  --primary-dark: #1557c0;
+  --primary-light: #e8f0fe;
+  --blue-50: #f0f8ff;
+  --blue-100: #d9ebff;
+  --blue-200: #b3d6ff;
+  --blue-300: #7fb3ff;
+  --blue-400: #5a9aff;
+  --blue-500: #1a73e8;
+  --blue-600: #1557c0;
+  --blue-700: #0d47a1;
   --secondary-color: #10b981;
   --secondary-dark: #059669;
   --danger-color: #ef4444;
@@ -18,7 +26,7 @@
   --warning-light: #fef3c7;
   --success-color: #10b981;
   --info-color: #3b82f6;
-  --text-dark: #1f2937;
+  --text-dark: #1a2332;
   --text-medium: #4b5563;
   --text-light: #6b7280;
   --text-lighter: #9ca3af;
@@ -29,10 +37,10 @@
   --border-light: #f3f4f6;
   --white: #ffffff;
   --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
-  --shadow: 0 4px 6px -1px rgba(99, 102, 241, 0.1);
-  --shadow-md: 0 10px 15px -3px rgba(99, 102, 241, 0.12);
-  --shadow-lg: 0 20px 25px -5px rgba(99, 102, 241, 0.15);
-  --shadow-xl: 0 25px 50px -12px rgba(99, 102, 241, 0.2);
+  --shadow: 0 4px 6px -1px rgba(26, 115, 232, 0.12);
+  --shadow-md: 0 10px 15px -3px rgba(26, 115, 232, 0.14);
+  --shadow-lg: 0 20px 25px -5px rgba(26, 115, 232, 0.18);
+  --shadow-xl: 0 25px 50px -12px rgba(26, 115, 232, 0.22);
 }
 
 body {
@@ -40,7 +48,7 @@ body {
     'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  background: linear-gradient(135deg, #f9fafc 0%, #f3f4f9 50%, #eef0ff 100%);
+  background: linear-gradient(135deg, #f7faff 0%, #eef5ff 50%, #e6f0ff 100%);
   color: var(--text-dark);
   line-height: 1.6;
   overflow-x: hidden;
