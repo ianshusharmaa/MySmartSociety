@@ -44,6 +44,12 @@ const DashboardNavbar = ({ onOpenNav }) => {
         >
           <MenuIcon />
         </IconButton>
+        <Box
+          component="img"
+          src="/logo.png"
+          alt="MySmartSociety logo"
+          sx={{ width: 34, height: 34, objectFit: 'contain', mr: 1.5 }}
+        />
         <Typography variant="h6" fontWeight={700} sx={{ flexGrow: 1 }}>
           My Society Resident
         </Typography>

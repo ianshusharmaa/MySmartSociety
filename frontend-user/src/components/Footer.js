@@ -120,9 +120,6 @@ const Footer = () => {
           <Typography variant="body2" color="text.secondary">
             © {new Date().getFullYear()} MySmartSociety | All Rights Reserved
           </Typography>
-          <Typography variant="body2" color="primary" fontWeight={600}>
-            Developed by Anshu Sharma
-          </Typography>
         </Stack>
       </Container>
     </Box>

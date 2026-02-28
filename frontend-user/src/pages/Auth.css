@@ -3,8 +3,20 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  position: relative;
+  overflow: hidden;
+  background: transparent;
   padding: 20px;
+}
+
+.auth-background {
+  position: absolute;
+  inset: -20px;
+  background-size: cover;
+  background-position: center;
+  filter: blur(12px);
+  transform: scale(1.05);
+  z-index: 0;
 }
 
 /* Welcome page */
@@ -137,17 +149,29 @@
 }
 
 .auth-card {
-  background: white;
+  position: relative;
+  z-index: 1;
+  background: rgba(255, 255, 255, 0.6);
+  backdrop-filter: blur(6px);
   border-radius: 12px;
-  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 20px 60px rgba(15, 23, 42, 0.2);
   padding: 40px;
   width: 100%;
   max-width: 500px;
+  border: 1px solid rgba(255, 255, 255, 0.4);
 }
 
 .auth-header {
   text-align: center;
   margin-bottom: 30px;
+}
+
+.auth-logo {
+  width: 84px;
+  height: 84px;
+  object-fit: contain;
+  margin: 0 auto 10px;
+  display: block;
 }
 
 .auth-header h1 {

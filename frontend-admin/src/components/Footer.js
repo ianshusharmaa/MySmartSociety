@@ -97,7 +97,6 @@ const Footer = () => {
           <p className="footer-copyright">
             © {new Date().getFullYear()} MySmartSociety | All Rights Reserved
           </p>
-          <p className="footer-credit">Developed by Anshu Sharma</p>
         </div>
       </div>
     </footer>

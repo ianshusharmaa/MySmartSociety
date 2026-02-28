@@ -1,63 +1,78 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { AuthContext } from '../../context/AuthContext';
+import { getComplaintStats, getPermissionStats, getMaintenanceStats, getNotices, getEvents } from '../../services/api';
 import {
   Box,
   Button,
   Card,
   CardContent,
   Chip,
+  CircularProgress,
+  Container,
+  Divider,
   Grid,
   Stack,
   Typography,
 } from '@mui/material';
-import ReportProblemIcon from '@mui/icons-material/ReportProblem';
-import KeyIcon from '@mui/icons-material/VpnKey';
-import PaymentsIcon from '@mui/icons-material/Payments';
-import PeopleAltIcon from '@mui/icons-material/PeopleAlt';
-import ScheduleIcon from '@mui/icons-material/Schedule';
+import AssignmentIcon from '@mui/icons-material/Assignment';
+import SecurityIcon from '@mui/icons-material/Security';
+import BuildIcon from '@mui/icons-material/Build';
+import NotificationsIcon from '@mui/icons-material/Notifications';
+import CampaignIcon from '@mui/icons-material/Campaign';
+import EventIcon from '@mui/icons-material/Event';
+import CalendarTodayIcon from '@mui/icons-material/CalendarToday';
+import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
-import LaunchIcon from '@mui/icons-material/Launch';
-import { Chart as ChartJS, ArcElement, CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend } from 'chart.js';
-import { Doughnut, Bar } from 'react-chartjs-2';
-import { getComplaintStats, getPermissionStats, getMaintenanceStats, getEvents, getAllUsers } from '../../services/api';
-import './Dashboard.css';
-
-ChartJS.register(ArcElement, CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend);
+import WarningIcon from '@mui/icons-material/Warning';
+import { PieChart, Pie, Cell, ResponsiveContainer, Legend, Tooltip } from 'recharts';
 
 const AdminDashboard = () => {
   const navigate = useNavigate();
   const [stats, setStats] = useState({
     complaints: { total: 0, pending: 0, resolved: 0 },
     permissions: { total: 0, pending: 0, approved: 0 },
-    maintenance: { total: 0, paid: 0, pending: 0, collectedAmount: 0 }
+    maintenance: { total: 0, paid: 0, pending: 0, collectedAmount: 0 },
   });
+  const [notices, setNotices] = useState([]);
   const [events, setEvents] = useState([]);
-  const [users, setUsers] = useState([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    fetchDashboardStats();
+    fetchDashboardData();
   }, []);
 
-  const fetchDashboardStats = async () => {
+  const fetchDashboardData = async () => {
     try {
-      const [complaintsRes, permissionsRes, maintenanceRes, eventsRes, usersRes] = await Promise.all([
+      const [complaintsRes, permissionsRes, maintenanceRes, noticesRes, eventsRes] = await Promise.all([
         getComplaintStats(),
         getPermissionStats(),
         getMaintenanceStats(),
+        getNotices(),
         getEvents(),
-        getAllUsers()
       ]);
 
       setStats({
         complaints: complaintsRes.data,
         permissions: permissionsRes.data,
-        maintenance: maintenanceRes.data
+        maintenance: maintenanceRes.data,
       });
-      setEvents(eventsRes.data || []);
-      setUsers(usersRes.data || []);
+
+      // Get 3 most recent notices
+      const sortedNotices = noticesRes.data
+        .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
+        .slice(0, 3);
+      setNotices(sortedNotices);
+
+      // Get upcoming events (future dates)
+      const today = new Date();
+      const upcoming = eventsRes.data
+        .filter((event) => new Date(event.date) >= today)
+        .sort((a, b) => new Date(a.date) - new Date(b.date))
+        .slice(0, 3);
+      setEvents(upcoming);
     } catch (error) {
-      console.error('Error fetching stats:', error);
+      console.error('Error fetching dashboard data:', error);
     } finally {
       setLoading(false);
     }
@@ -65,358 +80,367 @@ const AdminDashboard = () => {
 
   if (loading) {
     return (
-      <div className="loading-container">
-        <Typography variant="body2" color="text.secondary">
-          Loading dashboard...
-        </Typography>
-      </div>
+      <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', minHeight: '400px' }}>
+        <CircularProgress />
+      </Box>
     );
   }
 
-  // Complaints Chart Data
-  const complaintsChartData = {
-    labels: ['Pending', 'In Progress', 'Resolved'],
-    datasets: [{
-      data: [
-        stats.complaints.pending || 0,
-        stats.complaints.inProgress || 0,
-        stats.complaints.resolved || 0
-      ],
-      backgroundColor: ['#f59e0b', '#3b82f6', '#10b981'],
-      borderWidth: 0,
-    }]
-  };
-
-  // Permissions Chart Data
-  const permissionsChartData = {
-    labels: ['Pending', 'Approved', 'Rejected'],
-    datasets: [{
-      data: [
-        stats.permissions.pending || 0,
-        stats.permissions.approved || 0,
-        stats.permissions.rejected || 0
-      ],
-      backgroundColor: ['#f59e0b', '#10b981', '#ef4444'],
-      borderWidth: 0,
-    }]
-  };
-
-  // Users Chart Data
-  const activeUsers = users.filter(u => u.isActive).length;
-  const inactiveUsers = users.length - activeUsers;
-  const usersChartData = {
-    labels: ['Active', 'Inactive'],
-    datasets: [{
-      data: [activeUsers, inactiveUsers],
-      backgroundColor: ['#10b981', '#ef4444'],
-      borderWidth: 0,
-    }]
-  };
-
-  // Events Fundraiser Data
-  const eventsBarData = {
-    labels: events.slice(0, 5).map(e => e.title?.substring(0, 20) || 'Event'),
-    datasets: [{
-      label: 'Collected',
-      data: events.slice(0, 5).map(e => e.collectedAmount || 0),
-      backgroundColor: '#10b981',
-    }, {
-      label: 'Target',
-      data: events.slice(0, 5).map(e => e.targetAmount || 0),
-      backgroundColor: '#e5e7eb',
-    }]
-  };
-
-  const chartOptions = {
-    responsive: true,
-    maintainAspectRatio: false,
-    plugins: {
-      legend: {
-        position: 'bottom',
-        labels: { padding: 15, font: { size: 11 } }
-      }
-    }
-  };
-
-  const barChartOptions = {
-    responsive: true,
-    maintainAspectRatio: false,
-    plugins: {
-      legend: {
-        position: 'bottom',
-        labels: { padding: 10, font: { size: 11 } }
-      }
-    },
-    scales: {
-      y: { beginAtZero: true }
-    }
-  };
-
   const statCards = [
     {
-      title: 'Complaints',
+      icon: <AssignmentIcon sx={{ fontSize: 40, color: '#ef4444' }} />,
+      label: 'Total Complaints',
       value: stats.complaints.total,
-      helper: `${stats.complaints.pending} pending`,
-      icon: <ReportProblemIcon />,
-      colorClass: 'error',
-      onClick: () => navigate('/admin/complaints'),
+      path: '/admin/complaints',
+      bgColor: 'rgba(239, 68, 68, 0.1)',
     },
     {
-      title: 'Permissions',
+      icon: <SecurityIcon sx={{ fontSize: 40, color: '#f59e0b' }} />,
+      label: 'Total Permissions',
       value: stats.permissions.total,
-      helper: `${stats.permissions.pending} pending`,
-      icon: <KeyIcon />,
-      colorClass: 'warning',
-      onClick: () => navigate('/admin/permissions'),
+      path: '/admin/permissions',
+      bgColor: 'rgba(245, 158, 11, 0.1)',
     },
     {
-      title: 'Maintenance',
-      value: `₹${stats.maintenance.collectedAmount.toLocaleString()}`,
-      helper: `${stats.maintenance.paid} paid`,
-      icon: <PaymentsIcon />,
-      colorClass: 'success',
-      onClick: () => navigate('/admin/maintenance'),
-    },
-    {
-      title: 'Pending Payments',
+      icon: <BuildIcon sx={{ fontSize: 40, color: '#3b82f6' }} />,
+      label: 'Pending Payments',
       value: stats.maintenance.pending,
-      helper: 'Residents to follow up',
-      icon: <PeopleAltIcon />,
-      colorClass: 'info',
-      onClick: () => navigate('/admin/maintenance'),
+      path: '/admin/maintenance',
+      bgColor: 'rgba(59, 130, 246, 0.1)',
+    },
+    {
+      icon: <NotificationsIcon sx={{ fontSize: 40, color: '#8b5cf6' }} />,
+      label: 'Collections',
+      value: `₹${stats.maintenance.collectedAmount.toLocaleString()}`,
+      path: '/admin/maintenance',
+      bgColor: 'rgba(139, 92, 246, 0.1)',
     },
   ];
 
+  // Prepare chart data
+  const complaintStatusData = [
+    { name: 'Pending', value: stats.complaints.pending || 0 },
+    { name: 'Resolved', value: stats.complaints.resolved || 0 },
+  ].filter(item => item.value > 0);
+
+  const permissionStatusData = [
+    { name: 'Pending', value: stats.permissions.pending || 0 },
+    { name: 'Approved', value: stats.permissions.approved || 0 },
+  ].filter(item => item.value > 0);
+
+  const COLORS = ['#f59e0b', '#3b82f6', '#10b981', '#ef4444'];
+
   return (
-    <div className="dashboard-container">
-      <div className="dashboard-header">
-        <h1 className="dashboard-title">Admin Dashboard</h1>
-        <p className="dashboard-subtitle">Society management overview</p>
-      </div>
+    <Container maxWidth="lg">
+      <Stack spacing={4}>
+        {/* Header */}
+        <Box>
+          <Typography variant="h4" fontWeight={800} sx={{ color: '#1f2937', mb: 1 }}>
+            Admin Dashboard
+          </Typography>
+          <Typography variant="body2" sx={{ color: '#6b7280' }}>
+            Society management overview
+          </Typography>
+        </Box>
 
-      <Grid container spacing={2} className="stats-grid">
-        {statCards.map((card) => (
-          <Grid item xs={12} sm={6} lg={3} key={card.title}>
-            <div className="stat-card" onClick={card.onClick}>
-              <div className="stat-card-content">
-                <div className="stat-icon-row">
-                  <div className={`stat-icon ${card.colorClass}`}>
-                    {card.icon}
-                  </div>
-                  <div className="stat-details">
-                    <p className="stat-label">{card.title}</p>
-                    <h3 className="stat-value">{card.value}</h3>
-                  </div>
-                </div>
-                <div className="stat-helper-row">
-                  <ScheduleIcon className="stat-helper-icon" />
-                  <span className="stat-helper-text">{card.helper}</span>
-                </div>
-              </div>
-            </div>
-          </Grid>
-        ))}
-      </Grid>
+        {/* Stat Cards */}
+        <Grid container spacing={3}>
+          {statCards.map((card, index) => (
+            <Grid item xs={12} key={index}>
+              <Card
+                onClick={() => navigate(card.path)}
+                sx={{
+                  cursor: 'pointer',
+                  bgcolor: card.bgColor,
+                  border: '1px solid #e5e7eb',
+                  transition: 'transform 0.3s ease, box-shadow 0.3s ease',
+                  '&:hover': {
+                    transform: 'translateY(-8px)',
+                    boxShadow: 3,
+                  },
+                }}
+              >
+                <CardContent>
+                  <Stack direction="row" spacing={2} alignItems="center">
+                    <Box>{card.icon}</Box>
+                    <Stack>
+                      <Typography variant="body2" sx={{ color: '#6b7280', fontWeight: 600 }}>
+                        {card.label}
+                      </Typography>
+                      <Typography variant="h4" fontWeight={800} sx={{ color: '#1f2937' }}>
+                        {card.value}
+                      </Typography>
+                    </Stack>
+                  </Stack>
+                </CardContent>
+              </Card>
+            </Grid>
+          ))}
+        </Grid>
 
-      <Grid container spacing={2} className="main-grid">
-        <Grid item xs={12} lg={6}>
-          <div className="section-card">
-            <div className="section-card-content">
-              <div className="section-header">
-                <div className="section-info">
-                  <p className="section-overline">Complaints & Permissions</p>
-                  <h3 className="section-title">Operational queue</h3>
-                </div>
+        {/* Quick Actions */}
+        <Card sx={{ bgcolor: '#f0f2f5', border: '1px solid #e5e7eb' }}>
+          <CardContent>
+            <Typography variant="h6" fontWeight={800} sx={{ color: '#1f2937', mb: 3 }}>
+              Quick Actions
+            </Typography>
+            <Grid container spacing={2}>
+              <Grid item xs={12} sm={6} md={4}>
                 <Button
-                  size="small"
-                  endIcon={<LaunchIcon />}
+                  variant="contained"
+                  fullWidth
                   onClick={() => navigate('/admin/complaints')}
+                  startIcon={<AssignmentIcon />}
+                  sx={{
+                    bgcolor: '#ef4444',
+                    color: 'white',
+                    fontWeight: 700,
+                    py: 1.5,
+                    '&:hover': { bgcolor: '#dc2626' },
+                  }}
                 >
-                  View details
+                  Manage Complaints
                 </Button>
-              </div>
-
-              <div className="section-list">
-                <div className="section-list-item">
-                  <span className="section-list-label">Complaints pending</span>
-                  <Chip size="small" label={stats.complaints.pending} color="warning" />
-                </div>
-                <div className="section-list-item">
-                  <span className="section-list-label">Complaints resolved</span>
-                  <Chip size="small" label={stats.complaints.resolved} color="success" />
-                </div>
-                <div className="section-list-item">
-                  <span className="section-list-label">Permissions pending</span>
-                  <Chip size="small" label={stats.permissions.pending} color="warning" />
-                </div>
-                <div className="section-list-item">
-                  <span className="section-list-label">Permissions approved</span>
-                  <Chip size="small" label={stats.permissions.approved} color="success" />
-                </div>
-              </div>
-            </div>
-          </div>
-        </Grid>
-
-        <Grid item xs={12} lg={6}>
-          <div className="section-card">
-            <div className="section-card-content">
-              <div className="section-header">
-                <div className="section-info">
-                  <p className="section-overline">Maintenance & Collections</p>
-                  <h3 className="section-title">Cashflow snapshot</h3>
-                </div>
+              </Grid>
+              <Grid item xs={12} sm={6} md={4}>
                 <Button
-                  size="small"
-                  endIcon={<LaunchIcon />}
-                  onClick={() => navigate('/admin/maintenance')}
+                  variant="contained"
+                  fullWidth
+                  onClick={() => navigate('/admin/permissions')}
+                  startIcon={<SecurityIcon />}
+                  sx={{
+                    bgcolor: '#f59e0b',
+                    color: 'white',
+                    fontWeight: 700,
+                    py: 1.5,
+                    '&:hover': { bgcolor: '#d97706' },
+                  }}
                 >
-                  Go to payments
+                  Manage Permissions
                 </Button>
-              </div>
-
-              <div className="section-list">
-                <div className="section-list-item">
-                  <span className="section-list-label">Collected</span>
-                  <span className="section-list-value">
-                    ₹{stats.maintenance.collectedAmount.toLocaleString()}
-                  </span>
-                </div>
-                <div className="section-list-item">
-                  <span className="section-list-label">Paid residents</span>
-                  <div className="section-list-icon-value">
-                    <CheckCircleIcon className="section-list-icon success" />
-                    <span className="section-list-value">{stats.maintenance.paid}</span>
-                  </div>
-                </div>
-                <div className="section-list-item">
-                  <span className="section-list-label">Pending residents</span>
-                  <div className="section-list-icon-value">
-                    <ScheduleIcon className="section-list-icon warning" />
-                    <span className="section-list-value">{stats.maintenance.pending}</span>
-                  </div>
-                </div>
-              </div>
-
-              <div className="action-buttons">
-                <Button variant="contained" onClick={() => navigate('/admin/notices')}>
-                  Send notice
+              </Grid>
+              <Grid item xs={12} sm={6} md={4}>
+                <Button
+                  variant="contained"
+                  fullWidth
+                  onClick={() => navigate('/admin/maintenance')}
+                  startIcon={<BuildIcon />}
+                  sx={{
+                    bgcolor: '#3b82f6',
+                    color: 'white',
+                    fontWeight: 700,
+                    py: 1.5,
+                    '&:hover': { bgcolor: '#2563eb' },
+                  }}
+                >
+                  Manage Maintenance
                 </Button>
-                <Button variant="outlined" onClick={() => navigate('/admin/events')}>
-                  Create fundraiser
-                </Button>
-              </div>
-            </div>
-          </div>
-        </Grid>
-      </Grid>
+              </Grid>
+            </Grid>
+          </CardContent>
+        </Card>
 
-      <Grid container spacing={2} className="chart-grid">
-        <Grid item xs={12} lg={6}>
-          <div className="chart-card">
-            <div className="chart-card-content">
-              <h3 className="chart-title">Complaints Status</h3>
-              <div className="chart-container">
-                <Doughnut data={complaintsChartData} options={chartOptions} />
-              </div>
-              <div className="chart-stats">
-                <div className="chart-stat-row">
-                  <span className="chart-stat-label">Total Complaints:</span>
-                  <Chip size="small" label={stats.complaints.total} color="primary" />
-                </div>
-                <div className="chart-stat-row">
-                  <span className="chart-stat-label">Pending:</span>
-                  <Chip size="small" label={stats.complaints.pending} className="chip-warning" />
-                </div>
-                <div className="chart-stat-row">
-                  <span className="chart-stat-label">Resolved:</span>
-                  <Chip size="small" label={stats.complaints.resolved} className="chip-success" />
-                </div>
-              </div>
-            </div>
-          </div>
-        </Grid>
+        {/* Charts Section */}
+        {complaintStatusData.length > 0 || permissionStatusData.length > 0 ? (
+          <Grid container spacing={3}>
+            {complaintStatusData.length > 0 && (
+              <Grid item xs={12}>
+                <Card sx={{ border: '1px solid #e5e7eb', height: '100%' }}>
+                  <CardContent>
+                    <Typography variant="h6" fontWeight={800} sx={{ color: '#1f2937', mb: 3 }}>
+                      Complaint Status Overview
+                    </Typography>
+                    <ResponsiveContainer width="100%" height={250}>
+                      <PieChart>
+                        <Pie
+                          data={complaintStatusData}
+                          cx="50%"
+                          cy="50%"
+                          innerRadius={60}
+                          outerRadius={100}
+                          paddingAngle={2}
+                          dataKey="value"
+                        >
+                          {complaintStatusData.map((entry, index) => (
+                            <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
+                          ))}
+                        </Pie>
+                        <Tooltip />
+                        <Legend />
+                      </PieChart>
+                    </ResponsiveContainer>
+                  </CardContent>
+                </Card>
+              </Grid>
+            )}
+            {permissionStatusData.length > 0 && (
+              <Grid item xs={12}>
+                <Card sx={{ border: '1px solid #e5e7eb', height: '100%' }}>
+                  <CardContent>
+                    <Typography variant="h6" fontWeight={800} sx={{ color: '#1f2937', mb: 3 }}>
+                      Permission Status Overview
+                    </Typography>
+                    <ResponsiveContainer width="100%" height={250}>
+                      <PieChart>
+                        <Pie
+                          data={permissionStatusData}
+                          cx="50%"
+                          cy="50%"
+                          innerRadius={60}
+                          outerRadius={100}
+                          paddingAngle={2}
+                          dataKey="value"
+                        >
+                          {permissionStatusData.map((entry, index) => (
+                            <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
+                          ))}
+                        </Pie>
+                        <Tooltip />
+                        <Legend />
+                      </PieChart>
+                    </ResponsiveContainer>
+                  </CardContent>
+                </Card>
+              </Grid>
+            )}
+          </Grid>
+        ) : null}
 
-        <Grid item xs={12} lg={6}>
-          <div className="chart-card">
-            <div className="chart-card-content">
-              <h3 className="chart-title">Permissions Overview</h3>
-              <div className="chart-container">
-                <Doughnut data={permissionsChartData} options={chartOptions} />
-              </div>
-              <div className="chart-stats">
-                <div className="chart-stat-row">
-                  <span className="chart-stat-label">Total Permissions:</span>
-                  <Chip size="small" label={stats.permissions.total} color="primary" />
-                </div>
-                <div className="chart-stat-row">
-                  <span className="chart-stat-label">Pending:</span>
-                  <Chip size="small" label={stats.permissions.pending} className="chip-warning" />
-                </div>
-                <div className="chart-stat-row">
-                  <span className="chart-stat-label">Approved:</span>
-                  <Chip size="small" label={stats.permissions.approved} className="chip-success" />
-                </div>
-                <div className="chart-stat-row">
-                  <span className="chart-stat-label">Rejected:</span>
-                  <Chip size="small" label={stats.permissions.rejected || 0} className="chip-error" />
-                </div>
-              </div>
-            </div>
-          </div>
-        </Grid>
+        {/* Recent Notices Section */}
+        <Card sx={{ border: '1px solid #e5e7eb' }}>
+          <CardContent>
+            <Stack direction="row" justifyContent="space-between" alignItems="center" sx={{ mb: 3 }}>
+              <Stack direction="row" spacing={1} alignItems="center">
+                <CampaignIcon sx={{ color: '#8b5cf6', fontSize: 28 }} />
+                <Typography variant="h6" fontWeight={800} sx={{ color: '#1f2937' }}>
+                  Recent Notices
+                </Typography>
+              </Stack>
+              <Button
+                endIcon={<ArrowForwardIcon />}
+                onClick={() => navigate('/admin/notices')}
+                sx={{ fontWeight: 600, textTransform: 'none' }}
+              >
+                View All
+              </Button>
+            </Stack>
 
-        <Grid item xs={12} lg={6}>
-          <div className="chart-card">
-            <div className="chart-card-content">
-              <h3 className="chart-title">User Activity</h3>
-              <div className="chart-container">
-                <Doughnut data={usersChartData} options={chartOptions} />
-              </div>
-              <div className="chart-stats">
-                <div className="chart-stat-row">
-                  <span className="chart-stat-label">Total Users:</span>
-                  <Chip size="small" label={users.length} color="primary" />
-                </div>
-                <div className="chart-stat-row">
-                  <span className="chart-stat-label">Active Users:</span>
-                  <Chip size="small" label={activeUsers} className="chip-success" />
-                </div>
-                <div className="chart-stat-row">
-                  <span className="chart-stat-label">Inactive Users:</span>
-                  <Chip size="small" label={inactiveUsers} className="chip-error" />
-                </div>
-              </div>
-            </div>
-          </div>
-        </Grid>
+            {notices.length === 0 ? (
+              <Box sx={{ textAlign: 'center', py: 4 }}>
+                <Typography variant="body2" color="text.secondary">
+                  No notices available
+                </Typography>
+              </Box>
+            ) : (
+              <Stack spacing={2}>
+                {notices.map((notice, index) => (
+                  <Box key={notice._id || index}>
+                    <Stack spacing={1}>
+                      <Stack direction="row" justifyContent="space-between" alignItems="flex-start">
+                        <Typography variant="subtitle1" fontWeight={700} sx={{ color: '#1f2937' }}>
+                          {notice.title}
+                        </Typography>
+                        <Chip
+                          label={notice.priority || 'medium'}
+                          size="small"
+                          color={notice.priority === 'high' ? 'error' : notice.priority === 'low' ? 'success' : 'warning'}
+                          sx={{ fontWeight: 600 }}
+                        />
+                      </Stack>
+                      <Typography variant="body2" color="text.secondary" sx={{ lineHeight: 1.6 }}>
+                        {notice.content?.substring(0, 150)}
+                        {notice.content?.length > 150 ? '...' : ''}
+                      </Typography>
+                      <Typography variant="caption" color="text.secondary">
+                        {new Date(notice.createdAt).toLocaleDateString('en-IN', {
+                          year: 'numeric',
+                          month: 'short',
+                          day: 'numeric',
+                        })}
+                      </Typography>
+                    </Stack>
+                    {index < notices.length - 1 && <Divider sx={{ mt: 2 }} />}
+                  </Box>
+                ))}
+              </Stack>
+            )}
+          </CardContent>
+        </Card>
 
-        <Grid item xs={12} lg={6}>
-          <div className="chart-card">
-            <div className="chart-card-content">
-              <h3 className="chart-title">Events Fundraiser Progress</h3>
-              <div className="chart-container">
-                <Bar data={eventsBarData} options={barChartOptions} />
-              </div>
-              <div className="chart-stats">
-                <div className="chart-stat-row">
-                  <span className="chart-stat-label">Total Events:</span>
-                  <Chip size="small" label={events.length} color="primary" />
-                </div>
-                <div className="chart-stat-row">
-                  <span className="chart-stat-label">Total Collected:</span>
-                  <span className="chart-stat-value">₹{events.reduce((sum, e) => sum + (e.collectedAmount || 0), 0).toLocaleString()}</span>
-                </div>
-                <div className="chart-stat-row">
-                  <span className="chart-stat-label">Total Target:</span>
-                  <span className="chart-stat-value">₹{events.reduce((sum, e) => sum + (e.targetAmount || 0), 0).toLocaleString()}</span>
-                </div>
-              </div>
-            </div>
-          </div>
-        </Grid>
-      </Grid>
-    </div>
+        {/* Upcoming Events Section */}
+        <Card sx={{ border: '1px solid #e5e7eb', bgcolor: '#fefce8' }}>
+          <CardContent>
+            <Stack direction="row" justifyContent="space-between" alignItems="center" sx={{ mb: 3 }}>
+              <Stack direction="row" spacing={1} alignItems="center">
+                <EventIcon sx={{ color: '#f59e0b', fontSize: 28 }} />
+                <Typography variant="h6" fontWeight={800} sx={{ color: '#1f2937' }}>
+                  Upcoming Events
+                </Typography>
+              </Stack>
+              <Button
+                endIcon={<ArrowForwardIcon />}
+                onClick={() => navigate('/admin/events')}
+                sx={{ fontWeight: 600, textTransform: 'none' }}
+              >
+                View All
+              </Button>
+            </Stack>
+
+            {events.length === 0 ? (
+              <Box sx={{ textAlign: 'center', py: 4 }}>
+                <Typography variant="body2" color="text.secondary">
+                  No upcoming events
+                </Typography>
+              </Box>
+            ) : (
+              <Stack spacing={2}>
+                {events.map((event, index) => (
+                  <Box key={event._id || index}>
+                    <Stack spacing={1}>
+                      <Stack direction="row" justifyContent="space-between" alignItems="flex-start">
+                        <Typography variant="subtitle1" fontWeight={700} sx={{ color: '#1f2937' }}>
+                          {event.title}
+                        </Typography>
+                        <Stack direction="row" spacing={0.5} alignItems="center">
+                          <CalendarTodayIcon sx={{ fontSize: 14, color: '#f59e0b' }} />
+                          <Typography variant="caption" sx={{ color: '#f59e0b', fontWeight: 600 }}>
+                            {new Date(event.date).toLocaleDateString('en-IN', {
+                              month: 'short',
+                              day: 'numeric',
+                            })}
+                          </Typography>
+                        </Stack>
+                      </Stack>
+                      <Typography variant="body2" color="text.secondary" sx={{ lineHeight: 1.6 }}>
+                        {event.description?.substring(0, 120)}
+                        {event.description?.length > 120 ? '...' : ''}
+                      </Typography>
+                      <Stack direction="row" spacing={2}>
+                        {event.time && (
+                          <Chip
+                            label={event.time}
+                            size="small"
+                            sx={{ bgcolor: 'white', fontWeight: 600 }}
+                          />
+                        )}
+                        {event.location && (
+                          <Chip
+                            label={event.location}
+                            size="small"
+                            sx={{ bgcolor: 'white', fontWeight: 600 }}
+                          />
+                        )}
+                      </Stack>
+                    </Stack>
+                    {index < events.length - 1 && <Divider sx={{ mt: 2 }} />}
+                  </Box>
+                ))}
+              </Stack>
+            )}
+          </CardContent>
+        </Card>
+      </Stack>
+    </Container>
   );
 };
 

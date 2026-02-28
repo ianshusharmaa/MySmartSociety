@@ -20,9 +20,7 @@
 }
 
 body {
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
+  font-family: 'Inter', sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   background-color: var(--bg-light);
@@ -220,6 +218,47 @@ code {
   100% { transform: rotate(360deg); }
 }
 
+.card {
+  border-radius: 20px;
+  padding: 20px;
+  color: white;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+  transition: all 0.3s ease;
+}
+
+.card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15);
+}
+
+.complaints {
+  background: linear-gradient(135deg, #ff6b6b, #ee5253);
+}
+
+.permissions {
+  background: linear-gradient(135deg, #feca57, #ff9f43);
+}
+
+.maintenance {
+  background: linear-gradient(135deg, #1dd1a1, #10ac84);
+}
+
+.payments {
+  background: linear-gradient(135deg, #54a0ff, #2e86de);
+}
+
+.dashboard-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 25px;
+}
+
+.navbar {
+  backdrop-filter: blur(10px);
+  background: rgba(255, 255, 255, 0.7);
+  box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+}
+
 /* Responsive */
 @media (max-width: 768px) {
   .container {
@@ -230,4 +269,17 @@ code {
   .grid-3 {
     grid-template-columns: 1fr;
   }
+}
+
+.card {
+  border-radius: 20px;
+  padding: 20px;
+  color: white;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+  transition: all 0.3s ease;
+}
+
+.card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15);
 }

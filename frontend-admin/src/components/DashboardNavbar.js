@@ -21,6 +21,7 @@ const DashboardNavbar = ({ onOpenNav }) => {
         <button className="dashboard-navbar-menu-btn" onClick={onOpenNav}>
           <MenuIcon />
         </button>
+        <img className="dashboard-navbar-logo" src="/logo.png" alt="MySmartSociety logo" />
         <h1 className="dashboard-navbar-title">My Society Admin</h1>
         <div className="dashboard-navbar-desktop">
           {user?.name && (

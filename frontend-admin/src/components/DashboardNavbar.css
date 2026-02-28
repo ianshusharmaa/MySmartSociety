@@ -47,6 +47,13 @@
   margin: 0;
 }
 
+.dashboard-navbar-logo {
+  width: 34px;
+  height: 34px;
+  object-fit: contain;
+  margin-right: 10px;
+}
+
 .dashboard-navbar-desktop {
   display: none;
 }

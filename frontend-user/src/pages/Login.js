@@ -17,7 +17,6 @@ import {
   Divider,
   Link as MuiLink,
 } from '@mui/material';
-import PersonIcon from '@mui/icons-material/Person';
 
 const Login = () => {
   const [formData, setFormData] = useState({
@@ -58,7 +57,8 @@ const Login = () => {
     <Box
       sx={{
         minHeight: '100vh',
-        background: '#ffffff',
+        position: 'relative',
+        overflow: 'hidden',
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
@@ -66,13 +66,27 @@ const Login = () => {
         px: 2,
       }}
     >
-      <Container maxWidth="sm">
+      <Box
+        sx={{
+          position: 'absolute',
+          inset: '-20px',
+          backgroundImage: 'url(/welcomepage.jpg)',
+          backgroundSize: 'cover',
+          backgroundPosition: 'center',
+          filter: 'blur(12px)',
+          transform: 'scale(1.05)',
+          zIndex: 0,
+        }}
+      />
+      <Container maxWidth="sm" sx={{ position: 'relative', zIndex: 1 }}>
         <Card
           sx={{
-            boxShadow: '0 4px 20px rgba(26, 115, 232, 0.1)',
+            boxShadow: '0 10px 35px rgba(15, 23, 42, 0.18)',
             borderRadius: 3,
             overflow: 'hidden',
-            border: '1px solid #e5e7eb',
+            border: '1px solid rgba(255, 255, 255, 0.4)',
+            backgroundColor: 'rgba(255, 255, 255, 0.6)',
+            backdropFilter: 'blur(6px)',
           }}
         >
           {/* Header with Blue Background */}
@@ -88,8 +102,8 @@ const Login = () => {
             <Stack spacing={1} alignItems="center">
               <Box
                 sx={{
-                  width: 56,
-                  height: 56,
+                  width: 64,
+                  height: 64,
                   borderRadius: '50%',
                   bgcolor: 'rgba(255, 255, 255, 0.2)',
                   display: 'flex',
@@ -97,7 +111,12 @@ const Login = () => {
                   justifyContent: 'center',
                 }}
               >
-                <PersonIcon sx={{ fontSize: 32 }} />
+                <Box
+                  component="img"
+                  src="/logo.png"
+                  alt="MySmartSociety logo"
+                  sx={{ width: 44, height: 44, objectFit: 'contain' }}
+                />
               </Box>
               <Typography variant="h5" fontWeight={800}>
                 Smart Society
@@ -110,7 +129,7 @@ const Login = () => {
             </Stack>
           </Box>
 
-          <CardContent sx={{ p: 4, background: '#ffffff' }}>
+          <CardContent sx={{ p: 4, background: 'transparent' }}>
             <Stack spacing={3}>
               {/* Welcome Text */}
               <Box sx={{ textAlign: 'center' }}>
@@ -286,18 +305,6 @@ const Login = () => {
           }}
         >
           © 2026 MySmartSociety | All Rights Reserved
-        </Typography>
-        <Typography
-          variant="caption"
-          sx={{
-            display: 'block',
-            textAlign: 'center',
-            color: '#1a73e8',
-            mt: 0.5,
-            fontWeight: 600,
-          }}
-        >
-          Developed by Anshu Sharma
         </Typography>
       </Container>
     </Box>

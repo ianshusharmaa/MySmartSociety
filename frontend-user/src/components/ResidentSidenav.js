@@ -63,9 +63,6 @@ const ResidentSidenav = ({ mobileOpen, onClose }) => {
         <Typography variant="caption" color="text.secondary" sx={{ display: 'block' }}>
           MySmartSociety v1.0
         </Typography>
-        <Typography variant="caption" color="primary" sx={{ display: 'block', mt: 0.5, fontWeight: 600 }}>
-          Developed by Anshu Sharma
-        </Typography>
       </Box>
     </Box>
   );

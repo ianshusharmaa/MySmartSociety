@@ -53,7 +53,8 @@ const AdminUsers = () => {
     name: '',
     email: '',
     phone: '',
-    flatNo: '',
+    flatNumber: '',
+    building: '',
     role: 'resident',
     isActive: true,
     password: '',
@@ -83,7 +84,8 @@ const AdminUsers = () => {
         name: user.name,
         email: user.email,
         phone: user.phone || '',
-        flatNo: user.flatNo || '',
+        flatNumber: user.flatNumber || '',
+        building: user.building || '',
         role: user.role || 'resident',
         isActive: user.isActive !== false,
         password: '',
@@ -94,7 +96,8 @@ const AdminUsers = () => {
         name: '',
         email: '',
         phone: '',
-        flatNo: '',
+        flatNumber: '',
+        building: '',
         role: 'resident',
         isActive: true,
         password: '',
@@ -111,6 +114,16 @@ const AdminUsers = () => {
   const handleSaveUser = async () => {
     if (!formData.name || !formData.email) {
       toast.error('Name and email are required');
+      return;
+    }
+
+    if (!formData.phone) {
+      toast.error('Phone number is required');
+      return;
+    }
+
+    if (formData.role === 'resident' && (!formData.flatNumber || !formData.building)) {
+      toast.error('Flat number and building are required for residents');
       return;
     }
 
@@ -361,7 +374,7 @@ const AdminUsers = () => {
                   <TableCell>Name</TableCell>
                   <TableCell>Email</TableCell>
                   <TableCell>Phone</TableCell>
-                  <TableCell>Flat No</TableCell>
+                  <TableCell>Flat / Building</TableCell>
                   <TableCell>Role</TableCell>
                   <TableCell>Status</TableCell>
                   <TableCell align="right">Actions</TableCell>
@@ -383,7 +396,7 @@ const AdminUsers = () => {
                     </TableCell>
                     <TableCell>{user.email}</TableCell>
                     <TableCell>{user.phone || '-'}</TableCell>
-                    <TableCell>{user.flatNo || '-'}</TableCell>
+                    <TableCell>{user.flatNumber || '-'} {user.building || ''}</TableCell>
                     <TableCell>
                       <Chip
                         label={user.role}
@@ -471,16 +484,9 @@ const AdminUsers = () => {
             onChange={handleFormChange}
             margin="normal"
             variant="outlined"
+            required
           />
-          <TextField
-            fullWidth
-            label="Flat Number"
-            name="flatNo"
-            value={formData.flatNo}
-            onChange={handleFormChange}
-            margin="normal"
-            variant="outlined"
-          />
+          
           <FormControl fullWidth margin="normal" variant="outlined">
             <InputLabel>Role</InputLabel>
             <Select
@@ -494,6 +500,31 @@ const AdminUsers = () => {
               <MenuItem value="manager">Manager</MenuItem>
             </Select>
           </FormControl>
+
+          {formData.role === 'resident' && (
+            <>
+              <TextField
+                fullWidth
+                label="Flat Number"
+                name="flatNumber"
+                value={formData.flatNumber}
+                onChange={handleFormChange}
+                margin="normal"
+                variant="outlined"
+                required
+              />
+              <TextField
+                fullWidth
+                label="Building"
+                name="building"
+                value={formData.building}
+                onChange={handleFormChange}
+                margin="normal"
+                variant="outlined"
+                required
+              />
+            </>
+          )}
 
           {!editingId && (
             <TextField

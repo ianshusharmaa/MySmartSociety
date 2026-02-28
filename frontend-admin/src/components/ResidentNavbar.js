@@ -18,7 +18,7 @@ const ResidentNavbar = () => {
       <div className="navbar-shell">
         <div className="navbar-top">
           <Link to="/dashboard" className="navbar-brand">
-            <span className="brand-icon">🏢</span>
+            <img className="brand-logo" src="/logo.png" alt="MySmartSociety logo" />
             <div>
               <div className="brand-title">My Society</div>
               <div className="brand-subtitle">Resident Portal</div>

@@ -56,9 +56,15 @@ const Register = () => {
 
   return (
     <div className="auth-container">
+      <div
+        className="auth-background"
+        aria-hidden="true"
+        style={{ backgroundImage: 'url(/welcomepage.jpg)' }}
+      />
       <div className="auth-card">
         <div className="auth-header">
-          <h1>🏢 Smart Society</h1>
+          <img className="auth-logo" src="/logo.png" alt="MySmartSociety logo" />
+          <h1>Smart Society</h1>
           <h2>Create Account</h2>
           <p>Register as a new resident</p>
         </div>

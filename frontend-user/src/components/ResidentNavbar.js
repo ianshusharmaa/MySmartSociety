@@ -18,7 +18,6 @@ import {
 } from '@mui/material';
 import LogoutIcon from '@mui/icons-material/Logout';
 import MenuIcon from '@mui/icons-material/Menu';
-import ApartmentIcon from '@mui/icons-material/Apartment';
 import DashboardIcon from '@mui/icons-material/Dashboard';
 import AssignmentIcon from '@mui/icons-material/Assignment';
 import SecurityIcon from '@mui/icons-material/Security';
@@ -58,7 +57,12 @@ const ResidentNavbar = () => {
         <Toolbar disableGutters>
           {/* Logo */}
           <Stack direction="row" spacing={1.5} alignItems="center" sx={{ flexGrow: 1 }}>
-            <ApartmentIcon sx={{ fontSize: 32, color: '#1a73e8' }} />
+            <Box
+              component="img"
+              src="/logo.png"
+              alt="MySmartSociety logo"
+              sx={{ width: 40, height: 40, objectFit: 'contain' }}
+            />
             <Box>
               <Typography variant="h6" fontWeight={800} sx={{ color: '#1a73e8', lineHeight: 1 }}>
                 MySmartSociety

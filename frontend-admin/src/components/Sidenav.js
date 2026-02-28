@@ -1,7 +1,6 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
 import { Divider, Drawer } from '@mui/material';
-import ApartmentIcon from '@mui/icons-material/Apartment';
 import adminRoutes from '../routes/adminRoutes';
 import './Sidenav.css';
 
@@ -11,7 +10,7 @@ const Sidenav = ({ mobileOpen, onClose }) => {
   const drawerContent = (
     <div className="sidenav-container">
       <div className="sidenav-header">
-        <ApartmentIcon className="sidenav-header-icon" />
+        <img className="sidenav-header-logo" src="/logo.png" alt="MySmartSociety logo" />
         <div className="sidenav-header-info">
           <h3>My Society</h3>
           <p>Admin Panel</p>
@@ -35,7 +34,6 @@ const Sidenav = ({ mobileOpen, onClose }) => {
       </div>
       <div className="sidenav-footer">
         <span className="sidenav-footer-version">MySmartSociety v1.0</span>
-        <span className="sidenav-footer-credit">Developed by Anshu Sharma</span>
       </div>
     </div>
   );

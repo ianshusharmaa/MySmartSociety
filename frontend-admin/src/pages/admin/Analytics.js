@@ -190,7 +190,7 @@ const AdminAnalytics = () => {
       {/* Complaints Tab */}
       {tabValue === 0 && (
         <Grid container spacing={2}>
-          <Grid item xs={12} lg={6}>
+          <Grid item xs={12} lg={8}>
             <Card className="chart-card">
               <CardContent>
                 <h3 className="chart-title">Complaint Trends</h3>
@@ -209,45 +209,18 @@ const AdminAnalytics = () => {
             </Card>
           </Grid>
 
-          <Grid item xs={12} lg={6}>
-            <Card className="chart-card">
-              <CardContent>
-                <h3 className="chart-title">Complaints by Category</h3>
-                <ResponsiveContainer width="100%" height={300}>
-                  <PieChart>
-                    <Pie
-                      data={complaintCategoryData}
-                      cx="50%"
-                      cy="50%"
-                      labelLine={false}
-                      label={({ name, value }) => `${name}: ${value}`}
-                      outerRadius={80}
-                      fill="#8884d8"
-                      dataKey="value"
-                    >
-                      {complaintCategoryData.map((entry, index) => (
-                        <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
-                      ))}
-                    </Pie>
-                    <Tooltip />
-                  </PieChart>
-                </ResponsiveContainer>
-              </CardContent>
-            </Card>
-          </Grid>
-
-          <Grid item xs={12}>
+          <Grid item xs={12} lg={4}>
             <Card className="stats-card">
               <CardContent>
                 <h3 className="chart-title">Complaint Summary</h3>
                 <Grid container spacing={2}>
-                  <Grid item xs={12} sm={6} lg={3}>
+                  <Grid item xs={12} sm={6} lg={6}>
                     <div className="stat-box">
                       <p className="stat-label">Total Complaints</p>
                       <p className="stat-value">{complaintsData?.total || 0}</p>
                     </div>
                   </Grid>
-                  <Grid item xs={12} sm={6} lg={3}>
+                  <Grid item xs={12} sm={6} lg={6}>
                     <div className="stat-box">
                       <p className="stat-label">Pending</p>
                       <p className="stat-value" style={{ color: '#f59e0b' }}>
@@ -255,7 +228,7 @@ const AdminAnalytics = () => {
                       </p>
                     </div>
                   </Grid>
-                  <Grid item xs={12} sm={6} lg={3}>
+                  <Grid item xs={12} sm={6} lg={6}>
                     <div className="stat-box">
                       <p className="stat-label">In Progress</p>
                       <p className="stat-value" style={{ color: '#3b82f6' }}>
@@ -263,7 +236,7 @@ const AdminAnalytics = () => {
                       </p>
                     </div>
                   </Grid>
-                  <Grid item xs={12} sm={6} lg={3}>
+                  <Grid item xs={12} sm={6} lg={6}>
                     <div className="stat-box">
                       <p className="stat-label">Resolved</p>
                       <p className="stat-value" style={{ color: '#10b981' }}>
