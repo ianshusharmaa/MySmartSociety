@@ -10,6 +10,12 @@ body {
   box-sizing: border-box;
 }
 
+html, body, #root {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
 :root {
   --primary-color: #1a73e8;
   --primary-dark: #1557c0;

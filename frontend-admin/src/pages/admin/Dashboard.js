@@ -42,6 +42,15 @@ const AdminDashboard = () => {
     fetchDashboardData();
   }, []);
 
+  const getEventStartDate = (event) => {
+    if (!event) return null;
+    const rawDate = event.startDate || event.date;
+    if (!rawDate) return null;
+
+    const parsedDate = new Date(rawDate);
+    return Number.isNaN(parsedDate.getTime()) ? null : parsedDate;
+  };
+
   const fetchDashboardData = async () => {
     try {
       const [complaintsRes, permissionsRes, maintenanceRes, noticesRes, eventsRes] = await Promise.all([
@@ -64,11 +73,16 @@ const AdminDashboard = () => {
         .slice(0, 3);
       setNotices(sortedNotices);
 
-      // Get upcoming events (future dates)
+      // Get upcoming events (future start date)
       const today = new Date();
+      today.setHours(0, 0, 0, 0);
+
       const upcoming = eventsRes.data
-        .filter((event) => new Date(event.date) >= today)
-        .sort((a, b) => new Date(a.date) - new Date(b.date))
+        .filter((event) => {
+          const eventStartDate = getEventStartDate(event);
+          return eventStartDate && eventStartDate >= today;
+        })
+        .sort((a, b) => getEventStartDate(a) - getEventStartDate(b))
         .slice(0, 3);
       setEvents(upcoming);
     } catch (error) {
@@ -404,10 +418,10 @@ const AdminDashboard = () => {
                         <Stack direction="row" spacing={0.5} alignItems="center">
                           <CalendarTodayIcon sx={{ fontSize: 14, color: '#f59e0b' }} />
                           <Typography variant="caption" sx={{ color: '#f59e0b', fontWeight: 600 }}>
-                            {new Date(event.date).toLocaleDateString('en-IN', {
+                            {getEventStartDate(event)?.toLocaleDateString('en-IN', {
                               month: 'short',
                               day: 'numeric',
-                            })}
+                            }) || 'TBD'}
                           </Typography>
                         </Stack>
                       </Stack>
